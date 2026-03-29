@@ -17,6 +17,7 @@
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
 
+    <WixVariable Id="WixUILicenseRtf" Value="packaging\wix\license.rtf" />
     <UIRef Id="WixUI_Minimal" />
   </Product>
 

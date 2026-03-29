@@ -84,9 +84,27 @@ jobs:
         shell: pwsh
         run: |
           $tag = "${{ github.ref_name }}"
-          $version = ($tag.TrimStart('v') -split '-')[0]
-          candle.exe -nologo -dVersion=$version -dSourceDir=dist -arch x64 -out dist/ packaging/wix/vinth.wxs
-          light.exe -nologo -ext WixUIExtension -out "dist/vinth_${version}_windows_amd64.msi" dist/vinth.wixobj
+          $releaseVersion = ($tag.TrimStart('v') -split '-')[0]
+
+          # WiX Product Version must be x.x.x.x with numeric components.
+          $versionParts = $releaseVersion -split '\\.'
+          $normalizedParts = @()
+          foreach ($p in $versionParts) {
+            if ($p -notmatch '^\\d+$') {
+              throw "Release version '$releaseVersion' is not numeric enough for MSI"
+            }
+            $normalizedParts += [int]$p
+          }
+          while ($normalizedParts.Count -lt 4) {
+            $normalizedParts += 0
+          }
+          if ($normalizedParts.Count -gt 4) {
+            $normalizedParts = $normalizedParts[0..3]
+          }
+          $msiVersion = ($normalizedParts -join '.')
+
+          candle.exe -nologo "-dVersion=$msiVersion" "-dSourceDir=dist" -arch x64 -out dist/ packaging/wix/vinth.wxs
+          light.exe -nologo -ext WixUIExtension -out "dist/vinth_${releaseVersion}_windows_amd64.msi" dist/vinth.wixobj
 
       - name: Upload MSI to GitHub Release
         uses: softprops/action-gh-release@v2

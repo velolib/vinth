@@ -87,21 +87,16 @@ jobs:
           $releaseVersion = ($tag.TrimStart('v') -split '-')[0]
 
           # WiX Product Version must be x.x.x.x with numeric components.
-          $versionParts = $releaseVersion -split '\\.'
-          $normalizedParts = @()
-          foreach ($p in $versionParts) {
-            if ($p -notmatch '^\\d+$') {
-              throw "Release version '$releaseVersion' is not numeric enough for MSI"
-            }
-            $normalizedParts += [int]$p
+          $parsed = $null
+          if (-not [System.Version]::TryParse($releaseVersion, [ref]$parsed)) {
+            throw "Release version '$releaseVersion' is not numeric enough for MSI"
           }
-          while ($normalizedParts.Count -lt 4) {
-            $normalizedParts += 0
-          }
-          if ($normalizedParts.Count -gt 4) {
-            $normalizedParts = $normalizedParts[0..3]
-          }
-          $msiVersion = ($normalizedParts -join '.')
+
+          $major = $parsed.Major
+          $minor = if ($parsed.Minor -ge 0) { $parsed.Minor } else { 0 }
+          $build = if ($parsed.Build -ge 0) { $parsed.Build } else { 0 }
+          $revision = if ($parsed.Revision -ge 0) { $parsed.Revision } else { 0 }
+          $msiVersion = "$major.$minor.$build.$revision"
 
           candle.exe -nologo "-dVersion=$msiVersion" "-dSourceDir=dist" -arch x64 -out dist/ packaging/wix/vinth.wxs
           light.exe -nologo -ext WixUIExtension -out "dist/vinth_${releaseVersion}_windows_amd64.msi" dist/vinth.wixobj

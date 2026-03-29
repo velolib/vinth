@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const apiRequestTimeout = 10 * time.Second
+const apiRequestTimeout = 20 * time.Second
 const APIUserAgent = "vinth/0.1.0 (vlocitize@gmail.com)"
 
 var sharedHTTPClient = &http.Client{
@@ -32,6 +32,10 @@ func doWith429Retry(req *http.Request, retries int) (*http.Response, error) {
 	for i := 0; i < retries; i++ {
 		resp, err = sharedHTTPClient.Do(req)
 		if err != nil {
+			if i < retries-1 {
+				time.Sleep(time.Duration(i+1) * time.Second)
+				continue
+			}
 			return nil, err
 		}
 

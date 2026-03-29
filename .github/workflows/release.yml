@@ -48,10 +48,27 @@ jobs:
         shell: pwsh
         run: |
           choco install wixtoolset --yes --no-progress
-          $wixBin = "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
-          if (-not (Test-Path $wixBin)) {
-            throw "WiX bin path not found: $wixBin"
+          $candle = Get-Command candle.exe -ErrorAction SilentlyContinue
+          if (-not $candle) {
+            $searchRoots = @(
+              "${env:ProgramFiles(x86)}",
+              "${env:ProgramFiles}"
+            ) | Where-Object { $_ -and (Test-Path $_) }
+
+            foreach ($root in $searchRoots) {
+              $found = Get-ChildItem -Path $root -Filter candle.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+              if ($found) {
+                $candle = $found
+                break
+              }
+            }
           }
+
+          if (-not $candle) {
+            throw "WiX candle.exe not found after installation"
+          }
+
+          $wixBin = Split-Path -Parent $candle.Source
           $wixBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Build vinth.exe (windows/amd64)

@@ -1,0 +1,23 @@
+# Go build artifacts
+bin/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+vinth
+
+# Test artifacts
+*.test
+*.out
+coverage.out
+
+# IDE/OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local-only mods (user-specific, not source of truth)
+local/*.jar

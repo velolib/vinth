@@ -1,0 +1,735 @@
+{
+  "version": 1,
+  "game_version": "1.21.11",
+  "loader": "fabric",
+  "mods": {
+    "amecs": {
+      "project_id": "rcLriA4v",
+      "version_id": "DJFf2P5H",
+      "file_name": "amecs-bundle-1.6.1+mc1.21.9.jar",
+      "download_url": "https://cdn.modrinth.com/data/rcLriA4v/versions/DJFf2P5H/amecs-bundle-1.6.1%2Bmc1.21.9.jar",
+      "file_size": 147295,
+      "sha512_hash": "32ac691e893c130b65a2f435cbce80caf7f7559a011af2acee6aaa719d554a4859e2dd03f6564799a93998c1cf7134d45c9ae92816f6437ab41ed716817368b4"
+    },
+    "appleskin": {
+      "project_id": "EsAfCjCV",
+      "version_id": "59ti1rvg",
+      "file_name": "appleskin-fabric-mc1.21.11-3.0.8.jar",
+      "download_url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/59ti1rvg/appleskin-fabric-mc1.21.11-3.0.8.jar",
+      "file_size": 180107,
+      "sha512_hash": "d32206cb8d6fac7f0b579f7269203135777283e1639ccb68f8605e9f5469b5b54305fd36ba82c64b48b89ae4f1a38501bfb5827284520c3ec622d95edcfa34de"
+    },
+    "architectury-api": {
+      "project_id": "lhGA9TYQ",
+      "version_id": "uNdfrcQ8",
+      "file_name": "architectury-19.0.1-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/uNdfrcQ8/architectury-19.0.1-fabric.jar",
+      "file_size": 568474,
+      "sha512_hash": "7ca532844a0ed3d35e8515e13d1e84f8eadfceaae93281b79ad6b4dac253f4634e3dfcc7592f9543871dec117e1a3092c196ba5eae33735162de223be19dc4ad"
+    },
+    "armortip": {
+      "project_id": "5stdM2Ky",
+      "version_id": "lBFanZ5G",
+      "file_name": "armortip-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/5stdM2Ky/versions/lBFanZ5G/armortip-1.21.11.jar",
+      "file_size": 30172,
+      "sha512_hash": "72b60522a363d02109b92a93b6910c63635e065bd556259ef3861410f13285c5257e993bcc44cc98cca3aedbdcf95d75caad6fa9e874ce4330df46e1d364580d"
+    },
+    "axiom": {
+      "project_id": "N6n5dqoA",
+      "version_id": "uoTNUpOT",
+      "file_name": "Axiom-5.3.0-for-MC1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/N6n5dqoA/versions/uoTNUpOT/Axiom-5.3.0-for-MC1.21.11.jar",
+      "file_size": 44251951,
+      "sha512_hash": "7a2b8e8238bbb6f2699653140805c6ab0b142365c5b13698f86e8eccf7600f1e01339b489a21a41b38d7d06bcac67b3f872b098018473061c3996c89bf896c56"
+    },
+    "badoptimizations": {
+      "project_id": "g96Z4WVZ",
+      "version_id": "Q3Dusz2j",
+      "file_name": "BadOptimizations-2.4.1-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/g96Z4WVZ/versions/Q3Dusz2j/BadOptimizations-2.4.1-1.21.11.jar",
+      "file_size": 269545,
+      "sha512_hash": "ff91f1866f21a13a32d379080b8efb5d4e07577591228c1d307b34d052696c9bdcbaf7706208dfbac56abc2c29482a15edcbf11f69fc0a01e459c4c20a5c2c28"
+    },
+    "balm": {
+      "project_id": "MBAkmtvl",
+      "version_id": "IYfoTfMp",
+      "file_name": "balm-fabric-1.21.11-21.11.8.jar",
+      "download_url": "https://cdn.modrinth.com/data/MBAkmtvl/versions/IYfoTfMp/balm-fabric-1.21.11-21.11.8.jar",
+      "file_size": 872245,
+      "sha512_hash": "3d9af084e684e18152ea557cb8da92165f05d9ca7b9ee1c87db46a271681b7a1c0f23eab116cabe2734f1f445a75945168978d588f16ca785efe34e74216d826"
+    },
+    "better-clouds": {
+      "project_id": "5srFLIaK",
+      "version_id": "BXq5hzZ4",
+      "file_name": "better-clouds-1.11.3-alpha+1.21.11-fabric.rev.0daa830.jar",
+      "download_url": "https://cdn.modrinth.com/data/5srFLIaK/versions/BXq5hzZ4/better-clouds-1.11.3-alpha%2B1.21.11-fabric.rev.0daa830.jar",
+      "file_size": 787608,
+      "sha512_hash": "82f43583630eefb00452fd684e31a308a6912aa0b6f31a0ea9273cd17cb0cde411d70451e6835e117343d5ebfd67b7162a79a31037f7c9c19f596d25ac151565"
+    },
+    "betterf3": {
+      "project_id": "8shC1gFX",
+      "version_id": "Qw1nhj7u",
+      "file_name": "BetterF3-17.0.0-Fabric-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/8shC1gFX/versions/Qw1nhj7u/BetterF3-17.0.0-Fabric-1.21.11.jar",
+      "file_size": 1714229,
+      "sha512_hash": "5f9f2c7129508a3e27c8f275eb514d53451ba19ffb90aa23c256253c84585a21b4624b24cd51ed3ee28cc1f02fc5fe8bcdbeb48033a6e910f15653c4455b4c50"
+    },
+    "blockmeter": {
+      "project_id": "oGU9LXKC",
+      "version_id": "AOmW58vr",
+      "file_name": "BlockMeter-1.19-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/oGU9LXKC/versions/AOmW58vr/BlockMeter-1.19-1.21.11.jar",
+      "file_size": 1130076,
+      "sha512_hash": "f03f52476dd959e88f77ed81dc026786ce1d45ae4e44f42ff1b6fe350d2db8a5d273959f197d352165f4a9c3cea1a6f37d50cf4a6039ebb108bbd74a5494085a"
+    },
+    "boathud": {
+      "project_id": "ENNbyqzB",
+      "version_id": "SZXlgmdR",
+      "file_name": "boathud-1.2.1.jar",
+      "download_url": "https://cdn.modrinth.com/data/ENNbyqzB/versions/SZXlgmdR/boathud-1.2.1.jar",
+      "file_size": 37308,
+      "sha512_hash": "76524f9a7a975e9e20cb72a99ca07ba032105917354d61742cada8faace06f94b50c9e9784b1acbc270d76028de102112878373c17a3bf05ac90aaca33a0a580"
+    },
+    "carpet": {
+      "project_id": "TQTTVgYE",
+      "version_id": "HzPcczDK",
+      "file_name": "fabric-carpet-1.21.11-1.4.194+v251223.jar",
+      "download_url": "https://cdn.modrinth.com/data/TQTTVgYE/versions/HzPcczDK/fabric-carpet-1.21.11-1.4.194%2Bv251223.jar",
+      "file_size": 1532100,
+      "sha512_hash": "1135807e44b34a628c89674a4df94d617120aea932c24c7d4a375410103884e94713b4252d29035d1722d149cc65465afef24eafbfc476c51bc64b6fffff57e0"
+    },
+    "client-commands": {
+      "project_id": "7Coz83fv",
+      "version_id": "eKkGy7fT",
+      "file_name": "clientcommands-2.13.2.jar",
+      "download_url": "https://cdn.modrinth.com/data/7Coz83fv/versions/eKkGy7fT/clientcommands-2.13.2.jar",
+      "file_size": 2860357,
+      "sha512_hash": "865463fd609d46334d45698d37cceac4c3df981b07a2c2c8bb16ad46b461655aae8c9cd1a435641f9580b9d74a3f906a0c963f876bc1b28a7b95b3d502b93d51"
+    },
+    "clientsort": {
+      "project_id": "K0AkAin6",
+      "version_id": "YNOFvUDb",
+      "file_name": "clientsort-fabric-2.2.1+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/K0AkAin6/versions/YNOFvUDb/clientsort-fabric-2.2.1%2B1.21.11.jar",
+      "file_size": 342711,
+      "sha512_hash": "e7e793bce73c5011efa5e1e4da9339561714f6d22910f5233b1f7b7d661093cc4cde1742e6484912e9806ec660cbb5c707abf2de68ab585d9a4b7aa7b4a70f41"
+    },
+    "cloth-config": {
+      "project_id": "9s6osm5g",
+      "version_id": "xuX40TN5",
+      "file_name": "cloth-config-21.11.153-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/9s6osm5g/versions/xuX40TN5/cloth-config-21.11.153-fabric.jar",
+      "file_size": 1148427,
+      "sha512_hash": "8f455489d4b71069e998568cf4e1450116f4360a4eb481cd89117f629c6883164886cf63ca08ac4fc929dd13d1112152755a6216d4a1498ee6406ef102093e51"
+    },
+    "collective": {
+      "project_id": "e0M1UDsY",
+      "version_id": "T8rv7kwo",
+      "file_name": "collective-1.21.11-8.13.jar",
+      "download_url": "https://cdn.modrinth.com/data/e0M1UDsY/versions/T8rv7kwo/collective-1.21.11-8.13.jar",
+      "file_size": 963324,
+      "sha512_hash": "af145a48ac89346c7b1ffa8c44400a91a9908e4d1df0f6f1a603ff045b1fd82d9aa041aea27a682c196b266c0daf84cb5b7b8d83b07ee53e2bc1a5c210d19a1b"
+    },
+    "continuity": {
+      "project_id": "1IjD5062",
+      "version_id": "mX1iknM1",
+      "file_name": "continuity-3.0.1-beta.1+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/1IjD5062/versions/mX1iknM1/continuity-3.0.1-beta.1%2B1.21.11.jar",
+      "file_size": 997125,
+      "sha512_hash": "b092e95668bf5e32d531842d920e99f865213eaf3e7c26759b51e5a95ef2702c2c0485bba6d8adf4543e8d71680d5a05fad68e94159e8e507033b516b736eb60"
+    },
+    "controlling": {
+      "project_id": "xv94TkTM",
+      "version_id": "A6W4m3vi",
+      "file_name": "Controlling-fabric-1.21.11-29.0.1.jar",
+      "download_url": "https://cdn.modrinth.com/data/xv94TkTM/versions/A6W4m3vi/Controlling-fabric-1.21.11-29.0.1.jar",
+      "file_size": 83259,
+      "sha512_hash": "fae3f7be237b901783b873ecc3167e04fdc24819f16539610565993b7916691058b8d6e1aba4c13c0c75503bbd07a8ec4d2d6ce2bf5f94433fdee58933b049d9"
+    },
+    "crafting-tweaks": {
+      "project_id": "DMu0oBKf",
+      "version_id": "1s1JHamL",
+      "file_name": "craftingtweaks-fabric-1.21.11-21.11.5.jar",
+      "download_url": "https://cdn.modrinth.com/data/DMu0oBKf/versions/1s1JHamL/craftingtweaks-fabric-1.21.11-21.11.5.jar",
+      "file_size": 261118,
+      "sha512_hash": "9c55ce740ad3200a1dbbf748f5752e9f1c81262495b208f3e6316404e236b14aa89c3597badd56339fafc1f5b909a79b798029e4a0fb7f233b9b3d6c3b52e0b1"
+    },
+    "craftpresence": {
+      "project_id": "DFqQfIBR",
+      "version_id": "E0OvDYn8",
+      "file_name": "CraftPresence-2.7.1+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/DFqQfIBR/versions/E0OvDYn8/CraftPresence-2.7.1%2B1.21.11-fabric.jar",
+      "file_size": 1458204,
+      "sha512_hash": "d9bcfc9e95ae888314d0763bffebec10d478c1536971a7088f3a07c43a5273ec1a2223b63bb6da1863e56ab0b1a46a9633ae6c3091c410a5ae4dc886488dd152"
+    },
+    "csearcher": {
+      "project_id": "IK1wshSh",
+      "version_id": "1pfzcf4z",
+      "file_name": "ContainerSearcher-0.3.6+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/IK1wshSh/versions/1pfzcf4z/ContainerSearcher-0.3.6%2Bmc1.21.11.jar",
+      "file_size": 108309,
+      "sha512_hash": "6d619c7b3bb13d9617109cf0590e41fb4be8f3e45f990aff79d4ca18173823d7d18385855783ed0b540dbee44f238857fad3c8eb331bb4e54dc9cde58570f254"
+    },
+    "cubes-without-borders": {
+      "project_id": "ETlrkaYF",
+      "version_id": "G94OTz7b",
+      "file_name": "cwb-fabric-3.0.0-build.14+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/ETlrkaYF/versions/G94OTz7b/cwb-fabric-3.0.0-build.14%2Bmc1.21.11.jar",
+      "file_size": 78535,
+      "sha512_hash": "5c4efa5d080475556362e88348414d74b81c94b1f25f6455a3933a113c949f12a65d6a267822debda5aeafa212ef1f3f675ff1eb38eb82f4f96cf823bb8aaa21"
+    },
+    "dynamic-fps": {
+      "project_id": "LQ3K71Q1",
+      "version_id": "PUe5Asxs",
+      "file_name": "dynamic-fps-3.11.4+minecraft-1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/PUe5Asxs/dynamic-fps-3.11.4%2Bminecraft-1.21.11-fabric.jar",
+      "file_size": 218843,
+      "sha512_hash": "e52e4f2aa21bd3d2276499eb60c7ef582147c178119648a8e08fe031371e0145475547dce5e62dc6459d4fba84277f1cf8585a269f80d2490630aae868c892b5"
+    },
+    "dynamiccrosshair": {
+      "project_id": "ZcR9weSm",
+      "version_id": "9p0w9Gon",
+      "file_name": "dynamiccrosshair-9.11+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/ZcR9weSm/versions/9p0w9Gon/dynamiccrosshair-9.11%2B1.21.11-fabric.jar",
+      "file_size": 512139,
+      "sha512_hash": "78fa3ba7ab42040f30c45482c188a669235cf6a9bcf30f8206b203ca8fd576e929a4fc573567a8583fa7cc6376032b69f5620beb99b335565325a9ec78284257"
+    },
+    "entity-model-features": {
+      "project_id": "4I1XuqiY",
+      "version_id": "bXWByT4I",
+      "file_name": "entity_model_features_1.21.11-fabric-3.0.17.jar",
+      "download_url": "https://cdn.modrinth.com/data/4I1XuqiY/versions/bXWByT4I/entity_model_features_1.21.11-fabric-3.0.17.jar",
+      "file_size": 513907,
+      "sha512_hash": "be1dd5e19bbd2cfa0debf00f52f564d909ac4cb27be09715988b0ff6a540ae863f8d7680413c4f055a101040ad327c70a5cb45e16664fc7781ecb2672c7b3142"
+    },
+    "entityculling": {
+      "project_id": "NNAgCjsB",
+      "version_id": "SK12FGQf",
+      "file_name": "entityculling-fabric-1.10.0-mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/SK12FGQf/entityculling-fabric-1.10.0-mc1.21.11.jar",
+      "file_size": 1580001,
+      "sha512_hash": "25e3ba4d30518c65541872d61f12b7408d0c0231b12cfce7468b71097abd81f8e7c6bf46851dcb670b239ede0b96b78e8f303a21c6cb659b9be05181c4b17dc7"
+    },
+    "entitytexturefeatures": {
+      "project_id": "BVzZfTc1",
+      "version_id": "FEm4thcA",
+      "file_name": "entity_texture_features_1.21.11-fabric-7.0.13.jar",
+      "download_url": "https://cdn.modrinth.com/data/BVzZfTc1/versions/FEm4thcA/entity_texture_features_1.21.11-fabric-7.0.13.jar",
+      "file_size": 727130,
+      "sha512_hash": "6857d8ceb42c25f0c6219e5be98e800f483c1fa3eac034f2a8b3260a4fbe6e0f49f70132cc21705f9085e7edeabd79e9364e5b16c4b1f91739b5d5a240e80abd"
+    },
+    "essential": {
+      "project_id": "k2ZPuTBm",
+      "version_id": "QjO3jvbd",
+      "file_name": "Essential_1-3-10-8_fabric_1-21-11.jar",
+      "download_url": "https://cdn.modrinth.com/data/k2ZPuTBm/versions/QjO3jvbd/Essential_1-3-10-8_fabric_1-21-11.jar",
+      "file_size": 52323932,
+      "sha512_hash": "c4f7d29f015a159bde9a7c178a181071a1ad06c420a295165afcdf27ae31d5645d3a735524a59e99d2176d91fdfeb3aa0b11808aab4a798967812cb1ebbb11d5"
+    },
+    "extreme_sound_muffler": {
+      "project_id": "5IIKsxiL",
+      "version_id": "2Ep7M0N5",
+      "file_name": "ExtremeSoundMuffler-3.55_Fabric-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/5IIKsxiL/versions/2Ep7M0N5/ExtremeSoundMuffler-3.55_Fabric-1.21.11.jar",
+      "file_size": 476688,
+      "sha512_hash": "d3ec8152010f7509474d5bb98744d07c90fe82db739134dcd51db6dea57c5781fa2fc65d4457ed16b2d6daa9f534f6698254ae585af1848cb8669ad18491e843"
+    },
+    "fabric-api": {
+      "project_id": "P7dR8mSH",
+      "version_id": "i5tSkVBH",
+      "file_name": "fabric-api-0.141.3+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/i5tSkVBH/fabric-api-0.141.3%2B1.21.11.jar",
+      "file_size": 2412693,
+      "sha512_hash": "c20c017e23d6d2774690d0dd774cec84c16bfac5461da2d9345a1cd95eee495b1954333c421e3d1c66186284d24a433f6b0cced8021f62e0bfa617d2384d0471"
+    },
+    "fabric-language-kotlin": {
+      "project_id": "Ha28R6CL",
+      "version_id": "21TRTKmh",
+      "file_name": "fabric-language-kotlin-1.13.10+kotlin.2.3.20.jar",
+      "download_url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/21TRTKmh/fabric-language-kotlin-1.13.10%2Bkotlin.2.3.20.jar",
+      "file_size": 7796348,
+      "sha512_hash": "e4eaf7594de08eb4f3ea8af2e939f3ee61d07597afb4d5f420c3fbadcb381c7bbad4b1afd5919b3087b73ed9636fb018b1c978858a112bd4f6acdcb42e9eedaa"
+    },
+    "fadeless": {
+      "project_id": "ncKjyGm3",
+      "version_id": "rDv0F5eE",
+      "file_name": "fadeless-2.0.7-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/ncKjyGm3/versions/rDv0F5eE/fadeless-2.0.7-1.21.11.jar",
+      "file_size": 68360,
+      "sha512_hash": "f60607aa38891129f77c3e5905afe806689411c6bb7e207866fc804f7ebfc84b3589fcab8d8e74980f7a0cfc663444bb4b84ff890bb8092dfbe82e98337a0eec"
+    },
+    "fast-ip-ping": {
+      "project_id": "9mtu0sUO",
+      "version_id": "qtIKi2T9",
+      "file_name": "fast-ip-ping-v1.0.8-mc1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/9mtu0sUO/versions/qtIKi2T9/fast-ip-ping-v1.0.8-mc1.21.11-fabric.jar",
+      "file_size": 10375,
+      "sha512_hash": "e169c6252d655b0ecf76717faa206270b99f23b29979ca70d76b1830fef5a06fe9579d23fdaa85fb789bc6e54f25332c039b68d2f55275da627dee474a9fb9e8"
+    },
+    "ferrite-core": {
+      "project_id": "uXXizFIs",
+      "version_id": "Ii0gP3D8",
+      "file_name": "ferritecore-8.2.0-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/uXXizFIs/versions/Ii0gP3D8/ferritecore-8.2.0-fabric.jar",
+      "file_size": 80138,
+      "sha512_hash": "3210926a82eb32efd9bcebabe2f6c053daf5c4337eebc6d5bacba96d283510afbde646e7e195751de795ec70a2ea44fef77cb54bf22c8e57bb832d6217418869"
+    },
+    "firmament": {
+      "project_id": "IJNUBZ2a",
+      "version_id": "bXane87F",
+      "file_name": "Firmament-44.0.1+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/IJNUBZ2a/versions/bXane87F/Firmament-44.0.1%2Bmc1.21.11.jar",
+      "file_size": 5626478,
+      "sha512_hash": "c1cdc9466fe7ac33050657cef88001afffb11b991d0c1f5a28f41bde66fb0063f9d49049d771e8ca80403f319c99979a8a85679a35a25090a0bdba20c379f6a3"
+    },
+    "flashback": {
+      "project_id": "4das1Fjq",
+      "version_id": "DDcDAzpe",
+      "file_name": "Flashback-0.39.1-for-MC1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/4das1Fjq/versions/DDcDAzpe/Flashback-0.39.1-for-MC1.21.11.jar",
+      "file_size": 211362862,
+      "sha512_hash": "a2fe722e2501098dc0a21f2decb25d3d2533332fb3e7a59e6a3f077e32fd1af8f0f63abc32cf270f3558d118e7accfa4ba9e553b5f16798ad868c21218bd62cd"
+    },
+    "flightassistant": {
+      "project_id": "CWqLEOPt",
+      "version_id": "THfiVv8l",
+      "file_name": "flightassistant-fabric-3.0.1+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/CWqLEOPt/versions/THfiVv8l/flightassistant-fabric-3.0.1%2Bmc1.21.11.jar",
+      "file_size": 1214733,
+      "sha512_hash": "988b70c0abb0ffffcb4bb031434b2d4d1187a5048214803e66f7cfa5ba3bc9049dbdf05ff54db02dda8a8715dde743b33d1356fc0fe5e60c1c785833a0c1c53e"
+    },
+    "forge-config-api-port": {
+      "project_id": "ohNO6lps",
+      "version_id": "uXrWPsCu",
+      "file_name": "ForgeConfigAPIPort-v21.11.1-mc1.21.11-Fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/ohNO6lps/versions/uXrWPsCu/ForgeConfigAPIPort-v21.11.1-mc1.21.11-Fabric.jar",
+      "file_size": 598009,
+      "sha512_hash": "28791c992d613da14b8685505d3ef632ed53b5f1e1d517f0b41677d10f8419f192dfbde991308df6cda5d0f113c0aa8fc18ecf4a0834029403b16d2f68dc52d6"
+    },
+    "great-scrollable-tooltips": {
+      "project_id": "mzNYT2LK",
+      "version_id": "pqGqpuTQ",
+      "file_name": "great-scrollable-tooltips-19.0.0+fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/mzNYT2LK/versions/pqGqpuTQ/great-scrollable-tooltips-19.0.0%2Bfabric.jar",
+      "file_size": 2380197,
+      "sha512_hash": "d7e3c8b9ced1d8c82abbb7f837c76ba5692d0ff287b92881c759f8710308275bff03f8a1558eb32fc752199c2c297b9245aec0ec38c9c139d0ab3bfcaffd4c22"
+    },
+    "hide-experimental-warning": {
+      "project_id": "Rm4OOdHd",
+      "version_id": "4M7B1SyU",
+      "file_name": "hideexperimentalwarning-1.21.11-1.2.jar",
+      "download_url": "https://cdn.modrinth.com/data/Rm4OOdHd/versions/4M7B1SyU/hideexperimentalwarning-1.21.11-1.2.jar",
+      "file_size": 21451,
+      "sha512_hash": "771ed8c1dcf6554d62016b069504ecb769554616a18f5e515b30d0a8b5e0d126b9e455f7fbdf8b0deafca759b55138ba98881f588b813ed0f377c9367e20d063"
+    },
+    "immediatelyfast": {
+      "project_id": "5ZwdcRci",
+      "version_id": "QwkfUKSj",
+      "file_name": "ImmediatelyFast-Fabric-1.14.2+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/5ZwdcRci/versions/QwkfUKSj/ImmediatelyFast-Fabric-1.14.2%2B1.21.11.jar",
+      "file_size": 310445,
+      "sha512_hash": "dedff930a4e317994579020eaeef9f56d81d5215d871372d206fc974842d87e80e4be15d8571a4eaa4320c2412701ea093ba4494a47e8988e3d448ec8adcba37"
+    },
+    "iris": {
+      "project_id": "YL57xq9U",
+      "version_id": "fDpuVzVr",
+      "file_name": "iris-fabric-1.10.7+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/YL57xq9U/versions/fDpuVzVr/iris-fabric-1.10.7%2Bmc1.21.11.jar",
+      "file_size": 2807547,
+      "sha512_hash": "b009a07ecbdf3eb510b4acacbb435e058406ddbabcc4f1a5efeacad154cd26777474dcf4a2b5a3a92644b150f047977ada5687a9d9172132fbe6d3d036961b7e"
+    },
+    "item-scroller": {
+      "project_id": "JygyCSA4",
+      "version_id": "FcppMcft",
+      "file_name": "itemscroller-fabric-1.21.11-0.30.2.jar",
+      "download_url": "https://cdn.modrinth.com/data/JygyCSA4/versions/FcppMcft/itemscroller-fabric-1.21.11-0.30.2.jar",
+      "file_size": 223506,
+      "sha512_hash": "eb5f89d495465942fe5ae6b167e7258946410446cbd929f0628b4cef04490c5b499310a4a8a8d857f0128068447f432a2c1113558097f9a18bc30fb1afa1d0f7"
+    },
+    "ixeris": {
+      "project_id": "p8RJPJIC",
+      "version_id": "ZDRBUBPl",
+      "file_name": "Ixeris-4.1.5+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/p8RJPJIC/versions/ZDRBUBPl/Ixeris-4.1.5%2B1.21.11-fabric.jar",
+      "file_size": 703955,
+      "sha512_hash": "4e98cf61255b7691db157e6fe9916428d3c54290bf9ef65ec00ea587a3a6b771e067924109cfdf4f6fe7a4fd3be5855a401fd594f0c2e6661b28a178bbdc5b95"
+    },
+    "jade": {
+      "project_id": "nvQzSEkH",
+      "version_id": "sGI08gfW",
+      "file_name": "Jade-1.21.11-Fabric-21.1.4.jar",
+      "download_url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/sGI08gfW/Jade-1.21.11-Fabric-21.1.4.jar",
+      "file_size": 945827,
+      "sha512_hash": "ea347b48bb5afbec79d1f717dcc4c6a4a19abb65b604136dbf016a17c32a6ff297921b21b5f58e6af76edef7c9ef21a1b8df1cd76d6436bb1e1221449551f8ec"
+    },
+    "konkrete": {
+      "project_id": "J81TRJWm",
+      "version_id": "6ypTGwlP",
+      "file_name": "konkrete_fabric_1.9.18_MC_1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/J81TRJWm/versions/6ypTGwlP/konkrete_fabric_1.9.18_MC_1.21.11.jar",
+      "file_size": 771623,
+      "sha512_hash": "44d787e88d9e3991df90d8926b93620b7e347a5f30c27bd6bfa58016f38d3e549f2eafe7c66d9654f22c5d5fdc32ad977aec3be7d488efb766f6ce1b89f1f2fd"
+    },
+    "lambdabettergrass": {
+      "project_id": "2Uev7LdA",
+      "version_id": "BqLhPJRI",
+      "file_name": "lambdabettergrass-2.6.0+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/2Uev7LdA/versions/BqLhPJRI/lambdabettergrass-2.6.0%2B1.21.11.jar",
+      "file_size": 1756924,
+      "sha512_hash": "9d941e8bfdd80ce2243fd7f0d45f1a78da95943aba19ebdb38f524435ad5ac45c15974b3495a04b64507c9314a252bcf321bc66b37fad853c0952a0278ac5f15"
+    },
+    "lambdynamiclights": {
+      "project_id": "yBW8D80W",
+      "version_id": "5Tp7kdU0",
+      "file_name": "lambdynamiclights-4.9.1+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/yBW8D80W/versions/5Tp7kdU0/lambdynamiclights-4.9.1%2B1.21.11.jar",
+      "file_size": 2144865,
+      "sha512_hash": "df006fad702f713fa93feaa21ead00f446aa79e1771b5e049844842c7701d3a8a1b360a996c28f79c79a941e95ef63d27bfc563b5bec2ab8bf96eba0b2232fb8"
+    },
+    "language-reload": {
+      "project_id": "uLbm7CG6",
+      "version_id": "YhcaQg5e",
+      "file_name": "language-reload-1.7.6+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/uLbm7CG6/versions/YhcaQg5e/language-reload-1.7.6%2B1.21.11.jar",
+      "file_size": 76876,
+      "sha512_hash": "6eef536f74971e012deb34b6e95c0a1f5b3f44024646e6a5bd744b6d747daf7cc09da2c9ffb528bfdb215fcabb5ab0a11a701b36f984245db397bcf8d5ce3ee7"
+    },
+    "lighty": {
+      "project_id": "yjvKidNM",
+      "version_id": "QBVfrALF",
+      "file_name": "lighty-fabric-3.1.3+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/yjvKidNM/versions/QBVfrALF/lighty-fabric-3.1.3%2B1.21.11.jar",
+      "file_size": 91694,
+      "sha512_hash": "6155b2ece9a1283e457126c9bd25e9550e4332f58418cc5b746c22a992192c0c72c9fd855f17bb8a7c9f0598db6f2097dbd7929372e43adc258cc4f34ca550a3"
+    },
+    "litematica": {
+      "project_id": "bEpr0Arc",
+      "version_id": "f3J6HSlk",
+      "file_name": "litematica-fabric-1.21.11-0.26.2.jar",
+      "download_url": "https://cdn.modrinth.com/data/bEpr0Arc/versions/f3J6HSlk/litematica-fabric-1.21.11-0.26.2.jar",
+      "file_size": 1815955,
+      "sha512_hash": "2c67770cbaa3fb5d32365fcd6d26188bad27f0ec1f70c7ea18f6531c2475aa8d0c8daa2afb3839c0895fa290473ba72ad187bda65f9f33242afeb360126ab15c"
+    },
+    "litematica-printer": {
+      "project_id": "3llatzyE",
+      "version_id": "P4FcgXko",
+      "file_name": "litematica-printer-1.21.11-3.2.1B.jar",
+      "download_url": "https://cdn.modrinth.com/data/3llatzyE/versions/P4FcgXko/litematica-printer-1.21.11-3.2.1B.jar",
+      "file_size": 151729,
+      "sha512_hash": "8b10dfb14fbe759c5e8eef17938a15e8204aa9457e11f96a6140164a15cbc59b98ac705a83c5b179a5a571f1b37f43fea7344e275c57765606358a19fb4c369b"
+    },
+    "lithium": {
+      "project_id": "gvQqBUqZ",
+      "version_id": "Ow7wA0kG",
+      "file_name": "lithium-fabric-0.21.4+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/Ow7wA0kG/lithium-fabric-0.21.4%2Bmc1.21.11.jar",
+      "file_size": 900462,
+      "sha512_hash": "f14a5c3d2fad786347ca25083f902139694f618b7c103947f2fd067a7c5ee88a63e1ef8926f7d693ea79ed7d00f57317bae77ef9c2d630bf5ed01ac97a752b94"
+    },
+    "malilib": {
+      "project_id": "GcWjdA9I",
+      "version_id": "5Ywu5uMw",
+      "file_name": "malilib-fabric-1.21.11-0.27.7.jar",
+      "download_url": "https://cdn.modrinth.com/data/GcWjdA9I/versions/5Ywu5uMw/malilib-fabric-1.21.11-0.27.7.jar",
+      "file_size": 1915390,
+      "sha512_hash": "447681a7419f29a73e78c15f0cbee6cc0f9e6753225c62c9be228506b4cb6fef546751c852a9f7a0423ccdf5b32c4dba15df1289c53c532857a8f30e2e68017a"
+    },
+    "melody": {
+      "project_id": "CVT4pFB2",
+      "version_id": "Xo1GAiPu",
+      "file_name": "melody_fabric_1.0.15_MC_1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/CVT4pFB2/versions/Xo1GAiPu/melody_fabric_1.0.15_MC_1.21.11.jar",
+      "file_size": 227886,
+      "sha512_hash": "9a9ed54077daec16ea4ac6000cf40264d5bdaf97f0cc7b718d5062d538f0a09373bacedc276f43fe7ee4a9c14b4af7909a32b36c10d1b180d36f35b8a24a2a23"
+    },
+    "midnightlib": {
+      "project_id": "codAaoxh",
+      "version_id": "OeTayxh3",
+      "file_name": "midnightlib-fabric-1.9.2+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/codAaoxh/versions/OeTayxh3/midnightlib-fabric-1.9.2%2B1.21.11.jar",
+      "file_size": 58944,
+      "sha512_hash": "2a9a14bc6e41ec84f4eb017f3b41ba0b2bf9a4c98ba1b677775c051dcc755c1694cf55a0758f49e91c6792de84198142ba678d57ae0f7def54bdaad4a7e7a182"
+    },
+    "minecraft-cursor": {
+      "project_id": "o5fhgLeQ",
+      "version_id": "qAGkL02T",
+      "file_name": "cursors_extended-fabric-4.1.5+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/o5fhgLeQ/versions/qAGkL02T/cursors_extended-fabric-4.1.5%2B1.21.11.jar",
+      "file_size": 313089,
+      "sha512_hash": "64b14521d4c8565dea170b973d5aad1431b250d2abb0e458d75d6078c09759985efcaff70632e93171b3d6296c38bf6658a335c5f755274b7d47f5430b186dc4"
+    },
+    "modmenu": {
+      "project_id": "mOgUt4GM",
+      "version_id": "Tyk71iSw",
+      "file_name": "modmenu-17.0.0.jar",
+      "download_url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/Tyk71iSw/modmenu-17.0.0.jar",
+      "file_size": 1115809,
+      "sha512_hash": "146f8c356f86c32e5aab76598e021ac123779c89fc7a51a486fccd2871d2751b02046b4eea3194e52f2e7f38abbb5f78301c8f49bde6e60e1839677db9c84e33"
+    },
+    "mru": {
+      "project_id": "SNVQ2c0g",
+      "version_id": "XXzIJdq5",
+      "file_name": "mru-1.0.26+edge+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/SNVQ2c0g/versions/XXzIJdq5/mru-1.0.26%2Bedge%2B1.21.11-fabric.jar",
+      "file_size": 94773,
+      "sha512_hash": "5da1641bc57d1e04e858fcfa7fe9fe69163e4216f94d5f28430371c98aba1958dc8994243dac816af083033e203df1b51a1a55cea8bf50eadc7dac47136e9ccf"
+    },
+    "nbt-autocomplete": {
+      "project_id": "UR0ocuEt",
+      "version_id": "utAed06o",
+      "file_name": "NBTac-FABRIC-1.21.11-1.3.14.jar",
+      "download_url": "https://cdn.modrinth.com/data/UR0ocuEt/versions/utAed06o/NBTac-FABRIC-1.21.11-1.3.14.jar",
+      "file_size": 273092,
+      "sha512_hash": "06067fc81e229ded877f90c1c75e7bbb758295eac16baad94c726453d39860c64be143e10b7b17b72b6a6ef40c1ab986134f87e54a81a0cb47a1913d4ac450bd"
+    },
+    "netherportalfix": {
+      "project_id": "nPZr02ET",
+      "version_id": "D79IUl9r",
+      "file_name": "netherportalfix-fabric-1.21.11-21.11.2.jar",
+      "download_url": "https://cdn.modrinth.com/data/nPZr02ET/versions/D79IUl9r/netherportalfix-fabric-1.21.11-21.11.2.jar",
+      "file_size": 213274,
+      "sha512_hash": "9e385c30418e1eb80c2f74d1e319ed5bc45a19dfaa8408fba40b8afb6b4b49dc7a7951cb06fc3b4a1679bd818073300df56740ecee8224f47334e8dd6395bb49"
+    },
+    "odin": {
+      "project_id": "jJJLywXp",
+      "version_id": "Rpxp00NX",
+      "file_name": "Odin-0.1.8.jar",
+      "download_url": "https://cdn.modrinth.com/data/jJJLywXp/versions/Rpxp00NX/Odin-0.1.8.jar",
+      "file_size": 4562799,
+      "sha512_hash": "752d1b1b3b1540500279e2ead290ea61cd768e9b6cac5937f38f1f0429f59e279113e1a1f06b31c6b5d3a514ed60736ae941f6ccfc1cd0904a28c3d940884c27"
+    },
+    "optigui": {
+      "project_id": "JuksLGBQ",
+      "version_id": "7aP1cWaK",
+      "file_name": "optigui-2.3.0-beta.9+1.21.9.jar",
+      "download_url": "https://cdn.modrinth.com/data/JuksLGBQ/versions/7aP1cWaK/optigui-2.3.0-beta.9%2B1.21.9.jar",
+      "file_size": 611520,
+      "sha512_hash": "76b1cc7a9a3da3eefa087d57d195e7afd014613d9bf801a1690964603ba58970cd208af3b8113c29e6d6d039af692893bb380f66053f706321b0a5a3f25ca607"
+    },
+    "overflowing-bars": {
+      "project_id": "XD7XOrAF",
+      "version_id": "Wtc9Dvls",
+      "file_name": "OverflowingBars-v21.11.0-mc1.21.11-Fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/XD7XOrAF/versions/Wtc9Dvls/OverflowingBars-v21.11.0-mc1.21.11-Fabric.jar",
+      "file_size": 59536,
+      "sha512_hash": "b4534cbbb9df0923b875a3783463791bb5f43c885f6a33dfe53bd0dbe052b682f4972be3d7b0e2cebcf2870791813b906626ac596d90904abbaf1b67bccac0ec"
+    },
+    "pick-up-notifier": {
+      "project_id": "ZX66K16c",
+      "version_id": "2j46X7Ob",
+      "file_name": "PickUpNotifier-v21.11.0-mc1.21.11-Fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/ZX66K16c/versions/2j46X7Ob/PickUpNotifier-v21.11.0-mc1.21.11-Fabric.jar",
+      "file_size": 75224,
+      "sha512_hash": "49cf0053d20859584d05c02082225f26487c45682114d5022ffa00785132e455a56f28f988e507c37a8fa1941a56b91961b7bd81778ea6519475da09eb85447d"
+    },
+    "pixelshot": {
+      "project_id": "MUoQGQVU",
+      "version_id": "6OXZO0zE",
+      "file_name": "Pixelshot-v21.11.0-mc1.21.11-Fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/MUoQGQVU/versions/6OXZO0zE/Pixelshot-v21.11.0-mc1.21.11-Fabric.jar",
+      "file_size": 88624,
+      "sha512_hash": "f58a223bd5869c78dd27afb3f22ebaf77da756aa90996e28ce32722d1c9115139e97f25965d9efa18916c5e869393444f77003b7d0bc02ce2f9a5c4ec19af336"
+    },
+    "placeholder-api": {
+      "project_id": "eXts2L7r",
+      "version_id": "qxjzQ9xY",
+      "file_name": "placeholder-api-2.8.2+1.21.10.jar",
+      "download_url": "https://cdn.modrinth.com/data/eXts2L7r/versions/qxjzQ9xY/placeholder-api-2.8.2%2B1.21.10.jar",
+      "file_size": 268662,
+      "sha512_hash": "507ab10b7938dcd14d33121b8462649bdbe575cef248e917dfdf7566078ab5d0195ca1add95eae4863de3f652eb56db0a8669a67d5b5344e094d086f9dab5a08"
+    },
+    "puzzle": {
+      "project_id": "3IuO68q1",
+      "version_id": "Y9KybGCk",
+      "file_name": "puzzle-fabric-2.3.0+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/3IuO68q1/versions/Y9KybGCk/puzzle-fabric-2.3.0%2B1.21.11.jar",
+      "file_size": 141225,
+      "sha512_hash": "f8b55899f1c29f8c3387b009d7a80cdbb57d51184da4b7c680172102f1958bc5f86a501ca9987ea20ffc48222afcfa8a0d8db9042d3d4c0ae682e598441c6068"
+    },
+    "puzzles-lib": {
+      "project_id": "QAGBst4M",
+      "version_id": "owXZpJai",
+      "file_name": "PuzzlesLib-v21.11.12-mc1.21.11-Fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/QAGBst4M/versions/owXZpJai/PuzzlesLib-v21.11.12-mc1.21.11-Fabric.jar",
+      "file_size": 1124024,
+      "sha512_hash": "dbf4c97191455fe8e3c6801ddacc17d5157b5922f15a40e490ee0e2b172fe4718f4e5ec93ed244224aa077c7f53dcf30657ca68ac2d7f5692066ea7020af1542"
+    },
+    "radial": {
+      "project_id": "g52fu7eA",
+      "version_id": "AKjeHzu6",
+      "file_name": "radial-1.0.5+1.21.10.jar",
+      "download_url": "https://cdn.modrinth.com/data/g52fu7eA/versions/AKjeHzu6/radial-1.0.5%2B1.21.10.jar",
+      "file_size": 74527,
+      "sha512_hash": "8a1192aab41f4587f882915a6c6b4761efd9713415a54763df1fc40ae76e54d76f0a1ec9c8b1d0201115e1088e5cd502405b9b8d75636e7268dc02359116d71a"
+    },
+    "raised": {
+      "project_id": "nCQRBEiR",
+      "version_id": "lgLBYQO3",
+      "file_name": "raised-fabric-1.21.11-5.1.2.jar",
+      "download_url": "https://cdn.modrinth.com/data/nCQRBEiR/versions/lgLBYQO3/raised-fabric-1.21.11-5.1.2.jar",
+      "file_size": 85205,
+      "sha512_hash": "77e696f667896dc1036cb4e42ef7201035e809de3c4e27ae0eee4d57143065ccd99962019563bff97915f4f5a9373b5c8c025ba554b4ea65ec32c6f7f8cf5241"
+    },
+    "reeses-sodium-options": {
+      "project_id": "Bh37bMuy",
+      "version_id": "yIgAFMna",
+      "file_name": "reeses-sodium-options-fabric-2.0.3+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/Bh37bMuy/versions/yIgAFMna/reeses-sodium-options-fabric-2.0.3%2Bmc1.21.11.jar",
+      "file_size": 104577,
+      "sha512_hash": "13b54698be3cbecdcf544ff92186423652c6b1e91544864c979f51297a3159137f794db4e3ee21e0bae3abcf651bb4ecc0e2a5b4aa1eab1f1a81d6529fe82e59"
+    },
+    "rei": {
+      "project_id": "nfn13YXA",
+      "version_id": "zwCdgCLz",
+      "file_name": "RoughlyEnoughItems-21.11.814-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/nfn13YXA/versions/zwCdgCLz/RoughlyEnoughItems-21.11.814-fabric.jar",
+      "file_size": 2469337,
+      "sha512_hash": "65fed1a464034585adf664a33de17c06fb78c76c10b9042cf04d7c66fcc52f4401518af15d83a0f19b1735223b566e80488b4d33af5aa053b28c88e806f1867b"
+    },
+    "searchables": {
+      "project_id": "fuuu3xnx",
+      "version_id": "8t7XWQgt",
+      "file_name": "Searchables-fabric-1.21.11-1.0.4.jar",
+      "download_url": "https://cdn.modrinth.com/data/fuuu3xnx/versions/8t7XWQgt/Searchables-fabric-1.21.11-1.0.4.jar",
+      "file_size": 79919,
+      "sha512_hash": "e9b3d4d1fe7297d4476db1c9f909c209da360c46e7a5a0fef691e43d8fe6a2ba28fdb9e5afc393289785f0ed392252c98896b231901f29e31d01d430a3b55a07"
+    },
+    "shulkerboxtooltip": {
+      "project_id": "2M01OLQq",
+      "version_id": "rZovgkWT",
+      "file_name": "shulkerboxtooltip-fabric-5.2.16+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/2M01OLQq/versions/rZovgkWT/shulkerboxtooltip-fabric-5.2.16%2B1.21.11.jar",
+      "file_size": 389259,
+      "sha512_hash": "98cd0950adafa086201d4595e558c15697ba1c9eda1b47c30803081ae48e2594e74cae5b743b3283990fa9d0da6caab87958bf2e97125bc3cb9107f6ab6f1882"
+    },
+    "skyblocker-liap": {
+      "project_id": "y6DuFGwJ",
+      "version_id": "E6eA8eXs",
+      "file_name": "skyblocker-6.2.0+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/y6DuFGwJ/versions/E6eA8eXs/skyblocker-6.2.0%2B1.21.11.jar",
+      "file_size": 18844878,
+      "sha512_hash": "a1b1fb086a90586bc24cc41f07fee8fc049442f445cda953347f84e1337dfff449ba421da75bf9393ea7c41ba6bf9f574a9a6a67169e489e3a14445768863c9e"
+    },
+    "skyhanni": {
+      "project_id": "byNkmv5G",
+      "version_id": "yvYh00Zq",
+      "file_name": "SkyHanni-7.13.0-mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/byNkmv5G/versions/yvYh00Zq/SkyHanni-7.13.0-mc1.21.11.jar",
+      "file_size": 35822281,
+      "sha512_hash": "23233eef4559bdba4dbc0b06e3330913bce9f84ef37595d7094dd4302a024170a3f326b3841b4e3d2170ca5c4049b1f97c92da7d7053d524a1e0513a719367ae"
+    },
+    "smooth-scroll": {
+      "project_id": "CllP7wW0",
+      "version_id": "FBqx2Ic3",
+      "file_name": "smoothscroll-2.6.5.jar",
+      "download_url": "https://cdn.modrinth.com/data/CllP7wW0/versions/FBqx2Ic3/smoothscroll-2.6.5.jar",
+      "file_size": 99915,
+      "sha512_hash": "669ed6d38ee964b7d2f6627ae77621e2ac3aa92d783465ca5665d9e05b72bd0748286f2781964d230fb0f6edcf023509d5e47807c0ab1d2005d2f399b92c008f"
+    },
+    "smooth-swapping": {
+      "project_id": "ydZic5r4",
+      "version_id": "Udmk6JVV",
+      "file_name": "smoothswapping-0.9.8-1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/ydZic5r4/versions/Udmk6JVV/smoothswapping-0.9.8-1.21.11-fabric.jar",
+      "file_size": 66821,
+      "sha512_hash": "ceeb0072633a678a4905ca6ad7320dc5e044d2539942c6ae19a1e5b621fc1b37977e6f4704a0277b8c0da6e1dfd118fa221212c0b60e889c10919d238e1b5b64"
+    },
+    "sodium": {
+      "project_id": "AANobbMI",
+      "version_id": "UddlN6L4",
+      "file_name": "sodium-fabric-0.8.7+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/AANobbMI/versions/UddlN6L4/sodium-fabric-0.8.7%2Bmc1.21.11.jar",
+      "file_size": 1870358,
+      "sha512_hash": "d7f035d6112eaac92cf0f11e4426db631fca5a7115dd355c2126efee4255b648a0102552bbf7b22a7eae9203d08f8740435842bfddcd94e2434f51b57ee9c641"
+    },
+    "sodium-extra": {
+      "project_id": "PtjYWJkn",
+      "version_id": "yqY1efrC",
+      "file_name": "sodium-extra-fabric-0.8.3+mc1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/yqY1efrC/sodium-extra-fabric-0.8.3%2Bmc1.21.11.jar",
+      "file_size": 394219,
+      "sha512_hash": "b268a22ec7d27a45142f839ecf9a902c4ead4a5ef01e480f9e042f700a75a12a0db6346914f5445be68136b849a068de88d54823444c5d13268cfc0661854465"
+    },
+    "sound": {
+      "project_id": "ZouiUX7t",
+      "version_id": "wvhDSvYI",
+      "file_name": "sounds-2.4.23+edge+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/ZouiUX7t/versions/wvhDSvYI/sounds-2.4.23%2Bedge%2B1.21.11-fabric.jar",
+      "file_size": 8134500,
+      "sha512_hash": "caf5b13da29223731179a42da832d6eeb32b1620c2e15770fe9180645d7c101d2e73296d3de88ded6fab8c81fad96787e85c246a249475c10c8d5863897ea390"
+    },
+    "stendhal": {
+      "project_id": "BWloQ9jK",
+      "version_id": "6d1Ndpk3",
+      "file_name": "stendhal-1.4.5-1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/BWloQ9jK/versions/6d1Ndpk3/stendhal-1.4.5-1.21.11.jar",
+      "file_size": 486106,
+      "sha512_hash": "64ef930462edc0444e3bb7bac6bee8cedd968d3f0b684b5b733e17227343a31588dc290d0358efb0a7ab4e4f5eaaf89e852e42394f98298ff22532a2be089bef"
+    },
+    "tweakeroo": {
+      "project_id": "t5wuYk45",
+      "version_id": "7hikIkyO",
+      "file_name": "tweakeroo-fabric-1.21.11-0.27.6.jar",
+      "download_url": "https://cdn.modrinth.com/data/t5wuYk45/versions/7hikIkyO/tweakeroo-fabric-1.21.11-0.27.6.jar",
+      "file_size": 709998,
+      "sha512_hash": "5404e1188be7055b287fc51aafeb2ad5cfbebef1e275d19a0af4dd7f04b96a4120e6a5cd95a668fb12eb79aaf1fb48c1d960b3ed506b2ca17d86c6b7208bad42"
+    },
+    "unilib": {
+      "project_id": "nT86WUER",
+      "version_id": "2wvZasyj",
+      "file_name": "UniLib-1.2.1+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/nT86WUER/versions/2wvZasyj/UniLib-1.2.1%2B1.21.11-fabric.jar",
+      "file_size": 1859600,
+      "sha512_hash": "75a4e6fa95942a88ed5817eb44298d97a939a07f4b7066c3723d286e72e520ba54fbe208b08e3735ec28a5a9d9118836f620eadd22a5c69848e7d7701e57e179"
+    },
+    "voxy": {
+      "project_id": "fxxUqruK",
+      "version_id": "k5PZxsfL",
+      "file_name": "voxy-0.2.13-alpha.jar",
+      "download_url": "https://cdn.modrinth.com/data/fxxUqruK/versions/k5PZxsfL/voxy-0.2.13-alpha.jar",
+      "file_size": 12626870,
+      "sha512_hash": "1052f153be78c6f7fa46c4334dc40ce2aa4048a394949eb51d3e95300f56fce1b5b81a4b7d2a0aae0fc268cb36b30078f121feccba4999a7b3c790a1c7a53a4f"
+    },
+    "xaeroplus": {
+      "project_id": "EnPUzSTg",
+      "version_id": "NwyXKfRR",
+      "file_name": "XaeroPlus-2.30.10+fabric-1.21.11-WM1.40.11-MM25.3.10.jar",
+      "download_url": "https://cdn.modrinth.com/data/EnPUzSTg/versions/NwyXKfRR/XaeroPlus-2.30.10%2Bfabric-1.21.11-WM1.40.11-MM25.3.10.jar",
+      "file_size": 7846198,
+      "sha512_hash": "e2a77bbb2eef49d185a30e37ca84c2b23c6084f39e6c35b3a10a51a74e242f43041e951891d6e6e1ad12a4058b6ed373dc5cb6b4e60bce158d00ee94535447ad"
+    },
+    "xaeros-minimap": {
+      "project_id": "1bokaNcj",
+      "version_id": "avSqR3vF",
+      "file_name": "xaerominimap-fabric-1.21.11-25.3.10.jar",
+      "download_url": "https://cdn.modrinth.com/data/1bokaNcj/versions/avSqR3vF/xaerominimap-fabric-1.21.11-25.3.10.jar",
+      "file_size": 2151166,
+      "sha512_hash": "8790be4aa5af58acf4080f88204c6a0558d99780687d9c54d1827960dd6b49a23da9e3e14e680cb4636f58495c19f317d2f445460990b132e05056d1cedccc3b"
+    },
+    "xaeros-world-map": {
+      "project_id": "NcUtCpym",
+      "version_id": "CkZVhVE0",
+      "file_name": "xaeroworldmap-fabric-1.21.11-1.40.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/NcUtCpym/versions/CkZVhVE0/xaeroworldmap-fabric-1.21.11-1.40.11.jar",
+      "file_size": 1434362,
+      "sha512_hash": "3eb12225c10825d4887c2e915b2a331be09b6eac4a75ccc320767542c92633d11bc6a8a63cb2b28bbf062c102e4ec50000d3082892e00328044d6225b1836f65"
+    },
+    "yacl": {
+      "project_id": "1eAoo2KR",
+      "version_id": "pHWDw3Vc",
+      "file_name": "yet_another_config_lib_v3-3.8.2+1.21.11-fabric.jar",
+      "download_url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/pHWDw3Vc/yet_another_config_lib_v3-3.8.2%2B1.21.11-fabric.jar",
+      "file_size": 1126948,
+      "sha512_hash": "392db7d471030cca27483ecf58c626a14cd73d71a18afe6d4173c6b030948b8a925b36e708d4cc2c897dfa3f20a7f23b999fc18aa6d36c156da29037601153ac"
+    },
+    "zoomify": {
+      "project_id": "w7ThoJFB",
+      "version_id": "gI5KZI8V",
+      "file_name": "zoomify-2.15.2+1.21.11.jar",
+      "download_url": "https://cdn.modrinth.com/data/w7ThoJFB/versions/gI5KZI8V/zoomify-2.15.2%2B1.21.11.jar",
+      "file_size": 873443,
+      "sha512_hash": "de9d6097445175f6ef3e93475136fd67d29fc14fd26a6f19e63714efa6cf0961af5d270a95b65c4099a38517c3f91815fe4a1aa21b0acd84230398be2a6e3e24"
+    }
+  }
+}

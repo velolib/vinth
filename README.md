@@ -44,7 +44,15 @@ This is the core reason vinth exists: reproducibility over guesswork.
 
 ## Installation
 
-### Option 1: Download prebuilt binaries (recommended)
+### Option 1 (Windows): Use the MSI installer (recommended)
+
+1. Open GitHub Releases for this repo.
+2. Download the latest `vinth_<version>_windows_amd64.msi`.
+3. Run the installer.
+
+The installer adds vinth to your system PATH.
+
+### Option 2: Download prebuilt archives
 
 1. Open GitHub Releases for this repo.
 2. Download the archive for your OS and CPU.
@@ -58,7 +66,7 @@ New-Item -ItemType Directory -Force "$HOME\\bin" | Out-Null
 Move-Item .\vinth.exe "$HOME\\bin\\vinth.exe" -Force
 ```
 
-### Option 2: Build from source
+### Option 3: Build from source
 
 Requirements:
 

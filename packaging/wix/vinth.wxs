@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+    Id="*"
+    Name="vinth"
+    Language="1033"
+    Version="$(var.Version)"
+    Manufacturer="velolib"
+    UpgradeCode="{C9E57BB3-6262-4D43-9B35-53A857B85E15}">
+
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of vinth is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="MainFeature" Title="vinth" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <UIRef Id="WixUI_Minimal" />
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="vinth" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="VinthExeComponent" Guid="{8B1D80BF-3C62-4E0E-B9DA-95B1D89AF0F0}">
+        <File Id="VinthExeFile" Source="$(var.SourceDir)\vinth.exe" KeyPath="yes" />
+        <Environment
+          Id="AddVinthToPath"
+          Name="PATH"
+          Value="[INSTALLFOLDER]"
+          Permanent="no"
+          Part="last"
+          Action="set"
+          System="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

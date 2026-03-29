@@ -29,3 +29,51 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  msi:
+    runs-on: windows-latest
+    needs: goreleaser
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Install WiX Toolset
+        shell: pwsh
+        run: |
+          choco install wixtoolset --yes --no-progress
+          $wixBin = "${env:ProgramFiles(x86)}\WiX Toolset v3.11\bin"
+          if (-not (Test-Path $wixBin)) {
+            throw "WiX bin path not found: $wixBin"
+          }
+          $wixBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Build vinth.exe (windows/amd64)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          $env:GOOS = "windows"
+          $env:GOARCH = "amd64"
+          $env:CGO_ENABLED = "0"
+          go build -trimpath -ldflags "-s -w" -o "dist/vinth.exe" .
+
+      - name: Build MSI
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = ($tag.TrimStart('v') -split '-')[0]
+          candle.exe -nologo -dVersion=$version -dSourceDir=dist -arch x64 -out dist/ packaging/wix/vinth.wxs
+          light.exe -nologo -ext WixUIExtension -out "dist/vinth_${version}_windows_amd64.msi" dist/vinth.wixobj
+
+      - name: Upload MSI to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: dist/*.msi
+          fail_on_unmatched_files: true

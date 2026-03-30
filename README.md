@@ -273,3 +273,16 @@ Anyone else can then run:
 1. `vinth sync`
 
 to materialize the same tracked mods.
+
+## Future Ideas
+
+Potential improvements and features under consideration (no particular order):
+
+- Smart dependency resolution and conflict detection
+- Version pinning and constraint selection
+- Sync mod configuration files
+- Support for GitHub-hosted mods
+- Custom download source support
+- Built-in mod search and discovery
+- Extended lockfile metadata and annotations
+- Automated publishing to package managers (WinGet, Chocolatey, etc.)

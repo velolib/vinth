@@ -9,8 +9,6 @@ import (
 	"github.com/muesli/termenv"
 
 	"github.com/spf13/cobra"
-	"github.com/vbauerster/mpb/v8"
-	"github.com/vbauerster/mpb/v8/decor"
 	"github.com/velolib/vinth/internal/api"
 	"github.com/velolib/vinth/internal/lockfile"
 	"github.com/velolib/vinth/internal/utils"
@@ -29,7 +27,6 @@ var addCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		out := newCmdOutput()
 		t := termenv.ColorProfile()
-		bold := termenv.String().Bold()
 		green := termenv.String().Foreground(t.Color("10")).Bold()
 		yellow := termenv.String().Foreground(t.Color("11")).Bold()
 		red := termenv.String().Foreground(t.Color("9")).Bold()
@@ -55,18 +52,7 @@ var addCmd = &cobra.Command{
 		var wg sync.WaitGroup
 		var mu sync.Mutex
 		sem := make(chan struct{}, 8)
-		mpbStyle := mpb.WithWidth(40)
-		pbar := mpb.New(mpbStyle)
-		bar := pbar.New(int64(len(args)),
-			mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-			mpb.PrependDecorators(
-				decor.Name(green.Styled("Fetching data "), decor.WC{W: 16, C: decor.DindentRight}),
-				decor.CountersNoUnit(bold.Styled("%d / %d")),
-			),
-			mpb.AppendDecorators(
-				decor.Percentage(decor.WCSyncWidth),
-			),
-		)
+		pbar, bar := newStandardProgress(len(args), "Fetching data ", green)
 		successCount := 0
 		existsCount := 0
 		failedCount := 0

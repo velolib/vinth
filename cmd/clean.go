@@ -9,8 +9,6 @@ import (
 	"github.com/charmbracelet/huh"
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
-	"github.com/vbauerster/mpb/v8"
-	"github.com/vbauerster/mpb/v8/decor"
 	"github.com/velolib/vinth/internal/lockfile"
 )
 
@@ -98,17 +96,7 @@ var cleanCmd = &cobra.Command{
 
 		var deletedCount int
 		var failedCount int
-		pbar := mpb.New(mpb.WithWidth(40))
-		bar := pbar.New(int64(len(orphanedFiles)),
-			mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-			mpb.PrependDecorators(
-				decor.Name(green.Styled("Deleting files "), decor.WC{W: 16, C: decor.DindentRight}),
-				decor.CountersNoUnit("%d / %d"),
-			),
-			mpb.AppendDecorators(
-				decor.Percentage(decor.WCSyncWidth),
-			),
-		)
+		pbar, bar := newStandardProgress(len(orphanedFiles), "Deleting files ", green)
 		for _, file := range orphanedFiles {
 			if err := os.Remove(file); err != nil {
 				failedCount++

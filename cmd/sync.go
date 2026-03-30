@@ -18,8 +18,6 @@ import (
 	"github.com/velolib/vinth/internal/errors"
 
 	"github.com/spf13/cobra"
-	"github.com/vbauerster/mpb/v8"
-	"github.com/vbauerster/mpb/v8/decor"
 	"github.com/velolib/vinth/internal/download"
 	"github.com/velolib/vinth/internal/lockfile"
 	"github.com/velolib/vinth/internal/utils"
@@ -38,7 +36,6 @@ var syncCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		out := newCmdOutput()
 		p := termenv.ColorProfile()
-		bold := termenv.String().Bold()
 		green := termenv.String().Foreground(p.Color("10")).Bold()
 		yellow := termenv.String().Foreground(p.Color("11")).Bold()
 		red := termenv.String().Foreground(p.Color("9")).Bold()
@@ -66,18 +63,7 @@ var syncCmd = &cobra.Command{
 
 			var wg sync.WaitGroup
 			sem := make(chan struct{}, 10)
-			mpbStyle := mpb.WithWidth(40)
-			pbar := mpb.New(mpbStyle)
-			bar := pbar.New(int64(len(lf.Mods)),
-				mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-				mpb.PrependDecorators(
-					decor.Name(green.Styled("Downloading "), decor.WC{W: 16, C: decor.DindentRight}),
-					decor.CountersNoUnit(bold.Styled("%d / %d")),
-				),
-				mpb.AppendDecorators(
-					decor.Percentage(decor.WCSyncWidth),
-				),
-			)
+			pbar, bar := newStandardProgress(len(lf.Mods), "Downloading ", green)
 			for slug, entry := range lf.Mods {
 				wg.Add(1)
 				go func(modSlug string, modEntry lockfile.ModEntry) {
@@ -224,17 +210,7 @@ var syncCmd = &cobra.Command{
 					pruneCancelled = true
 					out.Tip("No files were pruned.")
 				} else {
-					prunePbar := mpb.New(mpb.WithWidth(40))
-					pruneBar := prunePbar.New(int64(len(orphanedFiles)),
-						mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-						mpb.PrependDecorators(
-							decor.Name(green.Styled("Pruning files "), decor.WC{W: 16, C: decor.DindentRight}),
-							decor.CountersNoUnit(bold.Styled("%d / %d")),
-						),
-						mpb.AppendDecorators(
-							decor.Percentage(decor.WCSyncWidth),
-						),
-					)
+					prunePbar, pruneBar := newStandardProgress(len(orphanedFiles), "Pruning files ", green)
 
 					for _, fileName := range orphanedFiles {
 						if err := os.Remove(fileName); err != nil {

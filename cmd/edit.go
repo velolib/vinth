@@ -11,8 +11,6 @@ import (
 	"github.com/charmbracelet/huh"
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
-	"github.com/vbauerster/mpb/v8"
-	"github.com/vbauerster/mpb/v8/decor"
 	"github.com/velolib/vinth/internal/api"
 	vinthErrors "github.com/velolib/vinth/internal/errors"
 	"github.com/velolib/vinth/internal/lockfile"
@@ -148,7 +146,6 @@ var editCmd = &cobra.Command{
 			out.Info("Upgrading remaining mods for the selected target...")
 
 			t := termenv.ColorProfile()
-			bold := termenv.String().Bold()
 			green := termenv.String().Foreground(t.Color("10")).Bold()
 			yellow := termenv.String().Foreground(t.Color("11")).Bold()
 			cyan := termenv.String().Foreground(t.Color("14")).Bold()
@@ -156,18 +153,7 @@ var editCmd = &cobra.Command{
 
 			var wg sync.WaitGroup
 			var mu sync.Mutex
-			mpbStyle := mpb.WithWidth(40)
-			pbar := mpb.New(mpbStyle)
-			bar := pbar.New(int64(len(lf.Mods)),
-				mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-				mpb.PrependDecorators(
-					decor.Name(green.Styled("Checking API "), decor.WC{W: 16, C: decor.DindentRight}),
-					decor.CountersNoUnit(bold.Styled("%d / %d")),
-				),
-				mpb.AppendDecorators(
-					decor.Percentage(decor.WCSyncWidth),
-				),
-			)
+			pbar, bar := newStandardProgress(len(lf.Mods), "Checking API ", green)
 
 			for slug, entry := range lf.Mods {
 				wg.Add(1)
@@ -299,24 +285,12 @@ func previewModCompatibility(lf *lockfile.Lockfile, gameVersion string, loader s
 	sem := make(chan struct{}, 8)
 
 	t := termenv.ColorProfile()
-	bold := termenv.String().Bold()
 	green := termenv.String().Foreground(t.Color("10")).Bold()
 	yellow := termenv.String().Foreground(t.Color("11")).Bold()
 	red := termenv.String().Foreground(t.Color("9")).Bold()
 	white := termenv.String().Foreground(t.Color("15")).Bold()
 
-	mpbStyle := mpb.WithWidth(40)
-	pbar := mpb.New(mpbStyle)
-	bar := pbar.New(int64(len(lf.Mods)),
-		mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-		mpb.PrependDecorators(
-			decor.Name(green.Styled("Checking API "), decor.WC{W: 16, C: decor.DindentRight}),
-			decor.CountersNoUnit(bold.Styled("%d / %d")),
-		),
-		mpb.AppendDecorators(
-			decor.Percentage(decor.WCSyncWidth),
-		),
-	)
+	pbar, bar := newStandardProgress(len(lf.Mods), "Checking API ", green)
 
 	for slug := range lf.Mods {
 		wg.Add(1)

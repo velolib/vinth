@@ -10,8 +10,6 @@ import (
 
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
-	"github.com/vbauerster/mpb/v8"
-	"github.com/vbauerster/mpb/v8/decor"
 	"github.com/velolib/vinth/internal/api"
 	vinthErrors "github.com/velolib/vinth/internal/errors"
 	"github.com/velolib/vinth/internal/lockfile"
@@ -84,18 +82,7 @@ var depsCmd = &cobra.Command{
 				var wg sync.WaitGroup
 				var mu sync.Mutex
 				sem := make(chan struct{}, 8)
-				mpbStyle := mpb.WithWidth(40)
-				pbar := mpb.New(mpbStyle)
-				bar := pbar.New(int64(len(missing)),
-					mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-					mpb.PrependDecorators(
-						decor.Name(green.Styled("Fetching data "), decor.WC{W: 16, C: decor.DindentRight}),
-						decor.CountersNoUnit("%d / %d"),
-					),
-					mpb.AppendDecorators(
-						decor.Percentage(decor.WCSyncWidth),
-					),
-				)
+				pbar, bar := newStandardProgress(len(missing), "Fetching data ", green)
 
 				addedCount := 0
 				existsCount := 0
@@ -422,18 +409,7 @@ func checkDependenciesWithProgress(lf *lockfile.Lockfile, prefetched map[string]
 	red := termenv.String().Foreground(profile.Color("9")).Bold()
 	white := termenv.String().Foreground(profile.Color("15")).Bold()
 
-	mpbStyle := mpb.WithWidth(40)
-	pbar := mpb.New(mpbStyle)
-	bar := pbar.New(int64(len(targets)),
-		mpb.BarStyle().Lbound("╢").Filler("█").Tip("█").Padding("·").Rbound("╟"),
-		mpb.PrependDecorators(
-			decor.Name(green.Styled("Checking deps "), decor.WC{W: 16, C: decor.DindentRight}),
-			decor.CountersNoUnit("%d / %d"),
-		),
-		mpb.AppendDecorators(
-			decor.Percentage(decor.WCSyncWidth),
-		),
-	)
+	pbar, bar := newStandardProgress(len(targets), "Checking deps ", green)
 
 	for _, target := range targets {
 		slug := target.slug

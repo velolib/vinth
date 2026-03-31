@@ -21,3 +21,5 @@ Thumbs.db
 
 # Local-only mods (user-specific, not source of truth)
 local/*.jar
+
+vinth.lock.json

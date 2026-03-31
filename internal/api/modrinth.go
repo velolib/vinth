@@ -14,11 +14,12 @@ import (
 
 // ModrinthVersion represents the JSON response from the Modrinth API
 type ModrinthVersion struct {
-	ID           string               `json:"id"`
-	ProjectID    string               `json:"project_id"`
-	VersionName  string               `json:"version_number"`
-	Dependencies []ModrinthDependency `json:"dependencies"`
-	Files        []struct {
+	ID            string               `json:"id"`
+	ProjectID     string               `json:"project_id"`
+	VersionName   string               `json:"version_number"`
+	DatePublished string               `json:"date_published"`
+	Dependencies  []ModrinthDependency `json:"dependencies"`
+	Files         []struct {
 		Filename string `json:"filename"`
 		URL      string `json:"url"`
 		Size     int64  `json:"size"`

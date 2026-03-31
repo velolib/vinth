@@ -122,16 +122,37 @@ vinth create
 
 Add one or more mods by slug (default) or Modrinth project ID.
 
+By default, `vinth add` is interactive:
+
+- For each mod, it shows a version picker with version number, ID, and published date.
+- Cancelling during selection cancels the whole add operation and applies no changes.
+
+Use `--latest` for the fast non-interactive behavior that auto-selects the latest compatible version.
+
+Version locking note:
+
+- Mods are only version-locked when `--lock` is explicitly provided.
+- Interactive version selection alone does not lock mods.
+
 ```bash
 # Add by slug
 vinth add sodium fabric-api iris
+
+# Interactive version selection is the default
+vinth add sodium
 
 # Add by Modrinth project ID
 vinth add --id AANobbMI P7dR8mSH
 vinth add --modrinth-id AANobbMI
 
+# Fast mode: skip interactive picker and use latest compatible versions
+vinth add --latest sodium iris
+
 # Add and lock versions immediately
 vinth add --lock sodium iris
+
+# Fast mode + lock
+vinth add --latest --lock sodium iris
 ```
 
 ### `vinth remove [mod-identifiers...]`

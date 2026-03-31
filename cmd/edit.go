@@ -7,6 +7,8 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"time"
+	"unicode"
 
 	"github.com/charmbracelet/huh"
 	"github.com/muesli/termenv"
@@ -27,7 +29,7 @@ type compatibilityPreview struct {
 var editCmd = &cobra.Command{
 	Use:     "edit",
 	Short:   "Interactively edit lockfile target settings and version locks",
-	Long:    "Interactively change Minecraft version/loader, preview compatibility, remove incompatible mods, refresh remaining mods, or toggle version locks.",
+	Long:    "Interactively change Minecraft version/loader, preview compatibility, remove incompatible mods, refresh remaining mods, toggle version locks, or select specific mod versions.",
 	Example: `  vinth edit`,
 	Run: func(cmd *cobra.Command, args []string) {
 		out := newCmdOutput()
@@ -49,7 +51,7 @@ var editCmd = &cobra.Command{
 			Options(
 				huh.NewOption("Minecraft version", "version"),
 				huh.NewOption("Mod loader", "loader"),
-				huh.NewOption("Version locks", "locking"),
+				huh.NewOption("Version management", "version_management"),
 				huh.NewOption("Exit", "exit"),
 			).
 			Value(&editAction).
@@ -63,8 +65,8 @@ var editCmd = &cobra.Command{
 			return
 		}
 
-		if editAction == "locking" {
-			runVersionLockToggle(lf, out)
+		if editAction == "version_management" {
+			runVersionManagement(lf, out)
 			return
 		}
 
@@ -286,97 +288,295 @@ var editCmd = &cobra.Command{
 	},
 }
 
-func runVersionLockToggle(lf *lockfile.Lockfile, out cmdOutput) {
+func runVersionManagement(lf *lockfile.Lockfile, out cmdOutput) {
 	if len(lf.Mods) == 0 {
 		out.Warn("Lockfile is empty.")
 		return
 	}
 
-	slugs := make([]string, 0, len(lf.Mods))
-	for slug := range lf.Mods {
-		slugs = append(slugs, slug)
-	}
-	sort.Strings(slugs)
+	stagedMods := cloneMods(lf.Mods)
+	t := termenv.ColorProfile()
+	changedStyle := termenv.String().Foreground(t.Color("11")).Bold()
 
-	options := make([]huh.Option[string], 0, len(slugs))
-	for _, slug := range slugs {
-		entry := lf.Mods[slug]
+	for {
+		slugs := make([]string, 0, len(stagedMods))
+		for slug := range stagedMods {
+			slugs = append(slugs, slug)
+		}
+		sort.Strings(slugs)
+
+		options := make([]huh.Option[string], 0, len(slugs)+2)
+		options = append(options,
+			huh.NewOption("Apply version management changes", "__apply"),
+			huh.NewOption("Exit without applying", "__exit"),
+		)
+		for _, slug := range slugs {
+			entry := stagedMods[slug]
+			versionName := compactStagedVersionLabel(entry)
+			lockState := "U"
+			if entry.VersionLock {
+				lockState = "L"
+			}
+			label := fmt.Sprintf("%s (%s) [%s]", slug, versionName, lockState)
+			if hasStagedModChange(lf.Mods[slug], entry) {
+				label += changedStyle.Styled(" [changed]")
+			}
+			options = append(options, huh.NewOption(label, slug))
+		}
+
+		selection := ""
+		err := huh.NewSelect[string]().
+			Title("Version management").
+			Description("Open a mod to edit version/lock, then apply once when done.").
+			Options(options...).
+			Value(&selection).
+			Height(pickerHeight(len(options))).
+			Run()
+		if err != nil {
+			out.Warn("Edit cancelled.")
+			return
+		}
+
+		switch selection {
+		case "__exit":
+			out.Warn("No changes were applied.")
+			return
+		case "__apply":
+			versionChanges, lockChanges := summarizeVersionManagementChanges(lf.Mods, stagedMods)
+			if versionChanges == 0 && lockChanges == 0 {
+				out.Warn("No changes were staged.")
+				return
+			}
+
+			out.Blank()
+			out.Summary("Version management", metric("version_changes", versionChanges), metric("lock_changes", lockChanges))
+			if !confirmEditApply(out) {
+				return
+			}
+
+			lf.Mods = stagedMods
+			if err := lf.Save(); err != nil {
+				out.Error(fmt.Sprintf("Failed to save lockfile: %v", err))
+				os.Exit(1)
+			}
+
+			out.Blank()
+			out.Success("Applied version management changes to vinth.lock.json.")
+			return
+		default:
+			runSingleModVersionManagement(selection, stagedMods, lf.GameVersion, lf.Loader, out)
+		}
+	}
+}
+
+func runSingleModVersionManagement(slug string, stagedMods map[string]lockfile.ModEntry, gameVersion string, loader string, out cmdOutput) {
+	for {
+		entry := stagedMods[slug]
 		versionName := entry.VersionName
 		if versionName == "" {
 			versionName = entry.VersionID
 		}
-		state := "unlocked"
+		lockState := "unlocked"
 		if entry.VersionLock {
-			state = "locked"
+			lockState = "locked"
 		}
-		label := fmt.Sprintf("%s (%s) [%s]", slug, versionName, state)
-		options = append(options, huh.NewOption(label, slug))
+
+		action := ""
+		err := huh.NewSelect[string]().
+			Title(fmt.Sprintf("Manage %s", slug)).
+			Description(fmt.Sprintf("Current version: %s | Lock: %s", versionName, lockState)).
+			Options(
+				huh.NewOption("Edit version (fetch versions first)", "edit_version"),
+				huh.NewOption("Toggle version lock", "toggle_lock"),
+				huh.NewOption("Go back", "back"),
+			).
+			Value(&action).
+			Run()
+		if err != nil {
+			out.Warn("Edit cancelled.")
+			return
+		}
+
+		switch action {
+		case "back":
+			return
+		case "toggle_lock":
+			entry.VersionLock = !entry.VersionLock
+			if entry.VersionName == "" {
+				entry.VersionName = entry.VersionID
+			}
+			stagedMods[slug] = entry
+			state := "unlocked"
+			if entry.VersionLock {
+				state = "locked"
+			}
+			out.Info(fmt.Sprintf("Staged: %s lock is now %s.", slug, state))
+		case "edit_version":
+			out.Info(fmt.Sprintf("Fetching versions for %s...", slug))
+			selectedVersion, cancelled, selectErr := selectVersionForEdit(slug, entry.VersionID, gameVersion, loader)
+			if cancelled {
+				out.Warn("Version selection cancelled.")
+				continue
+			}
+			if selectErr != nil {
+				out.Warn(fmt.Sprintf("Failed to select version: %v", selectErr))
+				continue
+			}
+			if len(selectedVersion.Files) == 0 {
+				out.Warn("Selected version has no downloadable files.")
+				continue
+			}
+
+			primaryFile := selectedVersion.Files[0]
+			safeFileName, sanitizeErr := utils.SanitizeModFileName(primaryFile.Filename)
+			if sanitizeErr != nil {
+				out.Warn(fmt.Sprintf("Invalid file name from API (%v)", sanitizeErr))
+				continue
+			}
+
+			newVersionName := selectedVersion.VersionName
+			if newVersionName == "" {
+				newVersionName = selectedVersion.ID
+			}
+
+			entry.ProjectID = selectedVersion.ProjectID
+			entry.VersionID = selectedVersion.ID
+			entry.VersionName = newVersionName
+			entry.FileName = safeFileName
+			entry.DownloadURL = primaryFile.URL
+			entry.FileSize = primaryFile.Size
+			entry.Hash = primaryFile.Hashes.Sha512
+			stagedMods[slug] = entry
+
+			out.Info(fmt.Sprintf("Staged: %s version set to %s.", slug, newVersionName))
+		}
+	}
+}
+
+func summarizeVersionManagementChanges(current map[string]lockfile.ModEntry, staged map[string]lockfile.ModEntry) (int, int) {
+	versionChanges := 0
+	lockChanges := 0
+	for slug, original := range current {
+		updated, exists := staged[slug]
+		if !exists {
+			continue
+		}
+		if original.VersionID != updated.VersionID {
+			versionChanges++
+		}
+		if original.VersionLock != updated.VersionLock {
+			lockChanges++
+		}
+	}
+	return versionChanges, lockChanges
+}
+
+func cloneMods(mods map[string]lockfile.ModEntry) map[string]lockfile.ModEntry {
+	cloned := make(map[string]lockfile.ModEntry, len(mods))
+	for slug, entry := range mods {
+		cloned[slug] = entry
+	}
+	return cloned
+}
+
+func hasStagedModChange(original lockfile.ModEntry, staged lockfile.ModEntry) bool {
+	return original.VersionID != staged.VersionID || original.VersionLock != staged.VersionLock
+}
+
+func compactStagedVersionLabel(entry lockfile.ModEntry) string {
+	versionName := entry.VersionName
+	if versionName == "" {
+		versionName = entry.VersionID
+	}
+	return truncateEditLabel(sanitizeEditTerminalLabel(versionName), 28)
+}
+
+func truncateEditLabel(value string, maxRunes int) string {
+	if maxRunes <= 3 {
+		return value
+	}
+	runes := []rune(value)
+	if len(runes) <= maxRunes {
+		return value
+	}
+	return string(runes[:maxRunes-3]) + "..."
+}
+
+func selectVersionForEdit(slug string, currentVersionID string, gameVersion string, loader string) (*api.ModrinthVersion, bool, error) {
+	versions, err := api.FetchProjectVersions(slug, gameVersion, loader)
+	if err != nil {
+		return nil, false, err
+	}
+	if len(versions) == 0 {
+		return nil, false, fmt.Errorf("no compatible versions found")
 	}
 
-	selected := []string{}
-	err := huh.NewMultiSelect[string]().
-		Title("Toggle Version Locks").
-		Description("Select mods to toggle lock state. Entries show mod slug, version number, and current lock state.").
+	options := make([]huh.Option[string], 0, len(versions)+1)
+	versionMap := make(map[string]api.ModrinthVersion, len(versions))
+	for _, version := range versions {
+		versionName := sanitizeEditTerminalLabel(version.VersionName)
+		if versionName == "" {
+			versionName = sanitizeEditTerminalLabel(version.ID)
+		}
+
+		safeID := sanitizeEditTerminalLabel(version.ID)
+		display := versionName
+		if safeID != versionName {
+			display = fmt.Sprintf("%s (ID: %s)", versionName, safeID)
+		}
+		if version.DatePublished != "" {
+			if parsed, parseErr := time.Parse(time.RFC3339, version.DatePublished); parseErr == nil {
+				display = fmt.Sprintf("%s • %s", display, parsed.Format("Jan 02, 2006"))
+			}
+		}
+		if version.ID == currentVersionID {
+			display = fmt.Sprintf("%s [current]", display)
+		}
+
+		options = append(options, huh.NewOption(display, version.ID))
+		versionMap[version.ID] = version
+	}
+	options = append(options, huh.NewOption("Go back", "__back"))
+
+	selectedID := currentVersionID
+	if selectedID == "" && len(versions) > 0 {
+		selectedID = versions[0].ID
+	}
+
+	err = huh.NewSelect[string]().
+		Title(fmt.Sprintf("Select version for %s", slug)).
+		Description("Choose a version, or go back.").
 		Options(options...).
-		Value(&selected).
+		Value(&selectedID).
 		Height(pickerHeight(len(options))).
 		Run()
 	if err != nil {
-		out.Warn("Edit cancelled.")
-		return
+		return nil, true, nil
+	}
+	if selectedID == "__back" {
+		return nil, true, nil
 	}
 
-	if len(selected) == 0 {
-		out.Warn("No mods selected.")
-		return
+	selected, exists := versionMap[selectedID]
+	if !exists {
+		return nil, false, fmt.Errorf("selected version not found")
 	}
 
-	lockedNow := 0
-	unlockedNow := 0
-	for _, slug := range selected {
-		entry := lf.Mods[slug]
-		if entry.VersionLock {
-			unlockedNow++
-		} else {
-			lockedNow++
+	return &selected, false, nil
+}
+
+func sanitizeEditTerminalLabel(value string) string {
+	cleaned := make([]rune, 0, len(value))
+	for _, r := range value {
+		if r == '\n' || r == '\r' || r == '\t' {
+			cleaned = append(cleaned, ' ')
+			continue
+		}
+		if unicode.IsPrint(r) && r != 0x1b {
+			cleaned = append(cleaned, r)
 		}
 	}
-
-	totalLocked := 0
-	for _, entry := range lf.Mods {
-		if entry.VersionLock {
-			totalLocked++
-		}
-	}
-	out.Blank()
-	out.Info(fmt.Sprintf("Pending lock changes: +%d lock(s), -%d unlock(s).", lockedNow, unlockedNow))
-
-	if !confirmEditApply(out) {
-		return
-	}
-
-	for _, slug := range selected {
-		entry := lf.Mods[slug]
-		entry.VersionLock = !entry.VersionLock
-		if entry.VersionName == "" {
-			entry.VersionName = entry.VersionID
-		}
-		lf.Mods[slug] = entry
-		if entry.VersionLock {
-			totalLocked++
-		} else if totalLocked > 0 {
-			totalLocked--
-		}
-	}
-
-	if err := lf.Save(); err != nil {
-		out.Error(fmt.Sprintf("Failed to save lockfile: %v", err))
-		os.Exit(1)
-	}
-
-	out.Blank()
-	out.Summary("Lock toggle", metric("selected", len(selected)), metric("locked", lockedNow), metric("unlocked", unlockedNow), metric("total_locked", totalLocked))
-	out.Success("Updated version lock settings in vinth.lock.json.")
+	return string(cleaned)
 }
 
 func confirmEditApply(out cmdOutput) bool {
@@ -405,30 +605,40 @@ func init() {
 
 func pickerHeight(optionCount int) int {
 	const (
-		minHeight      = 3
-		terminalBuffer = 4
-		maxVisibleRows = 18
+		defaultTerminalHeight = 24
+		terminalBuffer        = 3
+		chromeRows            = 2
+		minVisibleOptions     = 3
+		maxVisibleOptions     = 18
+		minTotalHeight        = minVisibleOptions + chromeRows
 	)
 
-	termHeight := 10
+	termHeight := defaultTerminalHeight
 	if fd := int(os.Stdout.Fd()); term.IsTerminal(fd) {
 		if _, h, err := term.GetSize(fd); err == nil {
 			termHeight = h
 		}
 	}
 
-	height := termHeight - terminalBuffer
-	if height < minHeight {
-		height = minHeight
+	availableHeight := termHeight - terminalBuffer
+	if availableHeight < minTotalHeight {
+		availableHeight = minTotalHeight
 	}
 
-	// Rendering fewer rows keeps huge lists (e.g. all MC versions) responsive.
-	if height > maxVisibleRows {
-		height = maxVisibleRows
+	visibleOptions := optionCount
+	if visibleOptions < minVisibleOptions {
+		visibleOptions = minVisibleOptions
+	}
+	if visibleOptions > maxVisibleOptions {
+		visibleOptions = maxVisibleOptions
 	}
 
-	if optionCount > 0 && optionCount < height {
-		height = optionCount
+	height := visibleOptions + chromeRows
+	if height > availableHeight {
+		height = availableHeight
+	}
+	if height < minTotalHeight {
+		height = minTotalHeight
 	}
 
 	return height

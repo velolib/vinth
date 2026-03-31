@@ -42,7 +42,7 @@ var listCmd = &cobra.Command{
 		out.Blank()
 
 		// Print header
-		headerLine := fmt.Sprintf("%-30s %-20s %s", "MOD SLUG", "VERSION ID", "LINK")
+		headerLine := fmt.Sprintf("%-30s %-20s %-8s %s", "MOD SLUG", "VERSION", "LOCKED", "LINK")
 		fmt.Println(white.Styled(bold.Styled(headerLine)))
 		fmt.Println(white.Styled(bold.Styled(strings.Repeat("━", len(headerLine)))))
 
@@ -50,7 +50,15 @@ var listCmd = &cobra.Command{
 		for slug, entry := range lf.Mods {
 			modrinthURL := fmt.Sprintf("https://modrinth.com/mod/%s", slug)
 			modLink := termenv.Hyperlink(modrinthURL, "View")
-			fmt.Printf("%-30s %-20s %s\n", slug, entry.VersionID, modLink)
+			versionName := entry.VersionName
+			if versionName == "" {
+				versionName = entry.VersionID
+			}
+			lockState := "no"
+			if entry.VersionLock {
+				lockState = "yes"
+			}
+			fmt.Printf("%-30s %-20s %-8s %s\n", slug, versionName, lockState, modLink)
 		}
 
 		out.Blank()

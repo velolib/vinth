@@ -73,12 +73,26 @@ var upgradeCmd = &cobra.Command{
 		pbar, bar := newStandardProgress(len(modsToUpgrade), "Checking API ", green)
 		upgradedCount := 0
 		upToDateCount := 0
+		skippedLockedCount := 0
 		failedCount := 0
 		white := termenv.String().Foreground(t.Color("15")).Bold()
 		for slug, entry := range modsToUpgrade {
 			wg.Add(1)
 			go func(modSlug string, currentEntry lockfile.ModEntry) {
 				defer wg.Done()
+				if currentEntry.VersionLock {
+					lockedVersion := currentEntry.VersionName
+					if lockedVersion == "" {
+						lockedVersion = currentEntry.VersionID
+					}
+					mu.Lock()
+					skippedLockedCount++
+					statusMsg := fmt.Sprintf("🔒 %s: %s", white.Styled(modSlug), yellow.Styled(fmt.Sprintf("Skipped (locked at %s)", lockedVersion)))
+					pbar.Write([]byte(statusMsg + "\n"))
+					bar.Increment()
+					mu.Unlock()
+					return
+				}
 				sem <- struct{}{}
 				defer func() { <-sem }()
 				latestInfo, err := api.FetchLatestVersion(modSlug, lf.GameVersion, lf.Loader)
@@ -95,9 +109,15 @@ var upgradeCmd = &cobra.Command{
 						failedCount++
 						statusMsg = fmt.Sprintf("⚠️  %s: %s", white.Styled(modSlug), yellow.Styled(fmt.Sprintf("Invalid file name from API (%v)", sanitizeErr)))
 					} else {
+						versionName := latestInfo.VersionName
+						if versionName == "" {
+							versionName = latestInfo.ID
+						}
 						lf.Mods[modSlug] = lockfile.ModEntry{
 							ProjectID:   latestInfo.ProjectID,
 							VersionID:   latestInfo.ID,
+							VersionName: versionName,
+							VersionLock: currentEntry.VersionLock,
 							FileName:    safeFileName,
 							DownloadURL: primaryFile.URL,
 							FileSize:    primaryFile.Size,
@@ -117,7 +137,7 @@ var upgradeCmd = &cobra.Command{
 		wg.Wait()
 		pbar.Wait()
 		out.Blank()
-		out.Summary("Upgrade", metric("checked", len(modsToUpgrade)), metric("upgraded", upgradedCount), metric("up_to_date", upToDateCount), metric("failed", failedCount))
+		out.Summary("Upgrade", metric("checked", len(modsToUpgrade)), metric("upgraded", upgradedCount), metric("up_to_date", upToDateCount), metric("skipped_locked", skippedLockedCount), metric("failed", failedCount))
 
 		if upgradedCount > 0 {
 			if err := lf.Save(); err != nil {
@@ -129,7 +149,11 @@ var upgradeCmd = &cobra.Command{
 			out.Tip("Run 'vinth sync' to apply changes to your files.")
 		} else {
 			out.Blank()
-			out.Success("All specified mods are already up to date.")
+			if skippedLockedCount > 0 {
+				out.Success("No upgrades applied. Selected mods are either already up to date or version-locked.")
+			} else {
+				out.Success("All specified mods are already up to date.")
+			}
 		}
 	},
 }

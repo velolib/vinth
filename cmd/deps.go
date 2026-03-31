@@ -125,9 +125,15 @@ var depsCmd = &cobra.Command{
 								failedCount++
 								statusMsg = fmt.Sprintf("⚠️  %s: invalid file name from API (%v)", white.Styled(slug), sanitizeErr)
 							} else {
+								versionName := versionInfo.VersionName
+								if versionName == "" {
+									versionName = versionInfo.ID
+								}
 								lf.Mods[slug] = lockfile.ModEntry{
 									ProjectID:   versionInfo.ProjectID,
 									VersionID:   versionInfo.ID,
+									VersionName: versionName,
+									VersionLock: false,
 									FileName:    safeFileName,
 									DownloadURL: primaryFile.URL,
 									FileSize:    primaryFile.Size,

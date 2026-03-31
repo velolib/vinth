@@ -129,6 +129,9 @@ vinth add sodium fabric-api iris
 # Add by Modrinth project ID
 vinth add --id AANobbMI P7dR8mSH
 vinth add --modrinth-id AANobbMI
+
+# Add and lock versions immediately
+vinth add --lock sodium iris
 ```
 
 ### `vinth remove [mod-identifiers...]`
@@ -175,6 +178,8 @@ vinth deps --add
 
 Upgrade all mods or specific mods.
 
+Note: version-locked mods are skipped by `vinth upgrade` and reported in the output summary.
+
 ```bash
 # Upgrade all
 vinth upgrade
@@ -186,7 +191,7 @@ vinth upgrade sodium lithium fabric-api
 
 ### `vinth edit`
 
-Interactively change Minecraft target version and loader, preview compatibility, and apply changes.
+Interactively change Minecraft target version/loader or toggle version locks on tracked mods.
 
 ```bash
 vinth edit
@@ -254,7 +259,14 @@ At a high level it includes:
 
 - Minecraft version
 - Mod loader
-- Mod entries (project/version IDs, download URL, file metadata, hash)
+- Mod entries (project/version IDs, version number, lock state, download URL, file metadata, hash)
+
+Version lock behavior:
+
+- Each mod entry stores whether it is version-locked.
+- Locked mods are skipped by `vinth upgrade`.
+- Use `vinth add --lock ...` to lock when adding mods.
+- Use `vinth edit` and choose the version-lock menu to toggle lock states later.
 
 Treat this file as source-controlled project state.
 

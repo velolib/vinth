@@ -15,12 +15,14 @@ import (
 )
 
 var addByID bool
+var addLock bool
 
 var addCmd = &cobra.Command{
 	Use:   "add [mod-identifiers...]",
 	Short: "Add one or more mods to the lockfile concurrently",
 	Long:  "Add mods to vinth.lock.json by slug (default) or by Modrinth project ID with --id.",
 	Example: `  vinth add sodium fabric-api iris
+	vinth add --lock sodium iris
   vinth add --id AANobbMI P7dR8mSH
   vinth add --modrinth-id AANobbMI`,
 	Args: cobra.MinimumNArgs(1),
@@ -46,6 +48,9 @@ var addCmd = &cobra.Command{
 			out.Info(fmt.Sprintf("Adding %d mod(s) by Modrinth project ID...", len(args)))
 		} else {
 			out.Info(fmt.Sprintf("Adding %d mod(s) by slug...", len(args)))
+		}
+		if addLock {
+			out.Info("Version locking is enabled for this add operation.")
 		}
 		out.Blank()
 
@@ -125,9 +130,15 @@ var addCmd = &cobra.Command{
 						failedCount++
 						statusMsg = fmt.Sprintf("❌ %s: %s", white.Styled(displayName), red.Styled(fmt.Sprintf("Invalid file name from API (%v)", sanitizeErr)))
 					} else {
+						versionName := versionInfo.VersionName
+						if versionName == "" {
+							versionName = versionInfo.ID
+						}
 						lf.Mods[modSlug] = lockfile.ModEntry{
 							ProjectID:   versionInfo.ProjectID,
 							VersionID:   versionInfo.ID,
+							VersionName: versionName,
+							VersionLock: addLock,
 							FileName:    safeFileName,
 							DownloadURL: primaryFile.URL,
 							FileSize:    primaryFile.Size,
@@ -187,5 +198,6 @@ var addCmd = &cobra.Command{
 func init() {
 	addCmd.Flags().BoolVar(&addByID, "id", false, "Treat all arguments as Modrinth project IDs")
 	addCmd.Flags().BoolVar(&addByID, "modrinth-id", false, "Treat all arguments as Modrinth project IDs")
+	addCmd.Flags().BoolVar(&addLock, "lock", false, "Lock added mods to their current version so upgrade skips them")
 	rootCmd.AddCommand(addCmd)
 }

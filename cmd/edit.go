@@ -26,8 +26,8 @@ type compatibilityPreview struct {
 
 var editCmd = &cobra.Command{
 	Use:     "edit",
-	Short:   "Interactively edit lockfile game version and loader",
-	Long:    "Interactively change Minecraft version/loader, preview compatibility, remove incompatible mods, and refresh remaining mods.",
+	Short:   "Interactively edit lockfile target settings and version locks",
+	Long:    "Interactively change Minecraft version/loader, preview compatibility, remove incompatible mods, refresh remaining mods, or toggle version locks.",
 	Example: `  vinth edit`,
 	Run: func(cmd *cobra.Command, args []string) {
 		out := newCmdOutput()
@@ -43,50 +43,91 @@ var editCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		var versionFilter string
+		var editAction string
+		if err := huh.NewSelect[string]().
+			Title("What do you want to edit?").
+			Options(
+				huh.NewOption("Minecraft version", "version"),
+				huh.NewOption("Mod loader", "loader"),
+				huh.NewOption("Version locks", "locking"),
+				huh.NewOption("Exit", "exit"),
+			).
+			Value(&editAction).
+			Run(); err != nil {
+			out.Warn("Edit cancelled.")
+			return
+		}
+
+		if editAction == "exit" {
+			out.Info("Exited edit menu.")
+			return
+		}
+
+		if editAction == "locking" {
+			runVersionLockToggle(lf, out)
+			return
+		}
+
 		newGameVersion := lf.GameVersion
 		newLoader := lf.Loader
 
-		if err := huh.NewSelect[string]().
-			Title("Which Minecraft versions do you want to see?").
-			Options(
-				huh.NewOption("Releases Only (Recommended)", "release"),
-				huh.NewOption("All Versions (Snapshots, Betas, etc.)", "all"),
-			).
-			Value(&versionFilter).
-			Run(); err != nil {
-			out.Warn("Edit cancelled.")
-			return
+		if editAction == "version" {
+			var versionFilter string
+			if err := huh.NewSelect[string]().
+				Title("Which Minecraft versions do you want to see?").
+				Options(
+					huh.NewOption("Releases Only (Recommended)", "release"),
+					huh.NewOption("All Versions (Snapshots, Betas, etc.)", "all"),
+					huh.NewOption("Exit", "exit"),
+				).
+				Value(&versionFilter).
+				Run(); err != nil {
+				out.Warn("Edit cancelled.")
+				return
+			}
+
+			if versionFilter == "exit" {
+				out.Info("Exited edit menu.")
+				return
+			}
+
+			out.Info("Fetching Minecraft versions from Mojang...")
+			versions, err := api.FetchMinecraftVersions(versionFilter == "release")
+			if err != nil {
+				out.Error(fmt.Sprintf("Failed to fetch versions: %v", err))
+				os.Exit(1)
+			}
+
+			newGameVersion, err = selectMinecraftVersion(newGameVersion, versions)
+			if err != nil {
+				out.Warn("Edit cancelled.")
+				return
+			}
 		}
 
-		out.Info("Fetching Minecraft versions from Mojang...")
-		versions, err := api.FetchMinecraftVersions(versionFilter == "release")
-		if err != nil {
-			out.Error(fmt.Sprintf("Failed to fetch versions: %v", err))
-			os.Exit(1)
-		}
+		if editAction == "loader" {
+			loaderOptions := []string{"fabric", "forge", "quilt", "neoforge"}
+			loaderHeight := pickerHeight(len(loaderOptions))
+			if err := huh.NewSelect[string]().
+				Title("Select Mod Loader").
+				Options(
+					huh.NewOption("Fabric", "fabric"),
+					huh.NewOption("NeoForge", "neoforge"),
+					huh.NewOption("Quilt", "quilt"),
+					huh.NewOption("Forge", "forge"),
+					huh.NewOption("Exit", "exit"),
+				).
+				Value(&newLoader).
+				Height(loaderHeight).
+				Run(); err != nil {
+				out.Warn("Edit cancelled.")
+				return
+			}
 
-		newGameVersion, err = selectMinecraftVersion(newGameVersion, versions)
-		if err != nil {
-			out.Warn("Edit cancelled.")
-			return
-		}
-
-		loaderOptions := []string{"fabric", "forge", "quilt", "neoforge"}
-		loaderHeight := pickerHeight(len(loaderOptions))
-		if err := huh.NewSelect[string]().
-			Title("Select Mod Loader").
-			Options(
-				huh.NewOption("Fabric", "fabric"),
-				huh.NewOption("NeoForge", "neoforge"),
-				huh.NewOption("Quilt", "quilt"),
-				huh.NewOption("Forge", "forge"),
-			).
-			Value(&newLoader).
-			Height(loaderHeight).
-			Run(); err != nil {
-			out.Warn("Edit cancelled.")
-			return
+			if newLoader == "exit" {
+				out.Info("Exited edit menu.")
+				return
+			}
 		}
 
 		out.Blank()
@@ -113,19 +154,7 @@ var editCmd = &cobra.Command{
 			out.Success("No incompatible mods detected in preview.")
 		}
 
-		confirmApply := false
-		if err := huh.NewConfirm().
-			Title("Apply these changes to vinth.lock.json? Incompatible mods will be removed.").
-			Affirmative("Apply").
-			Negative("Cancel").
-			Value(&confirmApply).
-			Run(); err != nil {
-			out.Warn("Edit cancelled.")
-			return
-		}
-
-		if !confirmApply {
-			out.Warn("No changes were applied.")
+		if !confirmEditApply(out) {
 			return
 		}
 
@@ -141,6 +170,7 @@ var editCmd = &cobra.Command{
 		}
 
 		autoUpgradedCount := 0
+		skippedLockedCount := 0
 		if len(lf.Mods) > 0 {
 			out.Blank()
 			out.Info("Upgrading remaining mods for the selected target...")
@@ -159,6 +189,19 @@ var editCmd = &cobra.Command{
 				wg.Add(1)
 				go func(modSlug string, currentEntry lockfile.ModEntry) {
 					defer wg.Done()
+					if currentEntry.VersionLock {
+						lockedVersion := currentEntry.VersionName
+						if lockedVersion == "" {
+							lockedVersion = currentEntry.VersionID
+						}
+						mu.Lock()
+						skippedLockedCount++
+						statusMsg := fmt.Sprintf("🔒 %s: %s", white.Styled(modSlug), yellow.Styled(fmt.Sprintf("Skipped (locked at %s)", lockedVersion)))
+						pbar.Write([]byte(statusMsg + "\n"))
+						bar.Increment()
+						mu.Unlock()
+						return
+					}
 					latestInfo, fetchErr := api.FetchLatestVersion(modSlug, lf.GameVersion, lf.Loader)
 
 					mu.Lock()
@@ -173,9 +216,15 @@ var editCmd = &cobra.Command{
 						if sanitizeErr != nil {
 							statusMsg = fmt.Sprintf("⚠️  %s: %s", white.Styled(modSlug), yellow.Styled(fmt.Sprintf("Invalid file name from API (%v)", sanitizeErr)))
 						} else {
+							versionName := latestInfo.VersionName
+							if versionName == "" {
+								versionName = latestInfo.ID
+							}
 							lf.Mods[modSlug] = lockfile.ModEntry{
 								ProjectID:   latestInfo.ProjectID,
 								VersionID:   latestInfo.ID,
+								VersionName: versionName,
+								VersionLock: currentEntry.VersionLock,
 								FileName:    safeFileName,
 								DownloadURL: primaryFile.URL,
 								FileSize:    primaryFile.Size,
@@ -213,6 +262,9 @@ var editCmd = &cobra.Command{
 		if autoUpgradedCount > 0 {
 			out.Success(fmt.Sprintf("Auto-upgraded %d remaining mod(s) for the selected target.", autoUpgradedCount))
 		}
+		if skippedLockedCount > 0 {
+			out.Info(fmt.Sprintf("Skipped %d version-locked mod(s) during auto-upgrade.", skippedLockedCount))
+		}
 
 		out.Blank()
 		out.Info("Checking dependencies for remaining mods...")
@@ -232,6 +284,119 @@ var editCmd = &cobra.Command{
 		}
 
 	},
+}
+
+func runVersionLockToggle(lf *lockfile.Lockfile, out cmdOutput) {
+	if len(lf.Mods) == 0 {
+		out.Warn("Lockfile is empty.")
+		return
+	}
+
+	slugs := make([]string, 0, len(lf.Mods))
+	for slug := range lf.Mods {
+		slugs = append(slugs, slug)
+	}
+	sort.Strings(slugs)
+
+	options := make([]huh.Option[string], 0, len(slugs))
+	for _, slug := range slugs {
+		entry := lf.Mods[slug]
+		versionName := entry.VersionName
+		if versionName == "" {
+			versionName = entry.VersionID
+		}
+		state := "unlocked"
+		if entry.VersionLock {
+			state = "locked"
+		}
+		label := fmt.Sprintf("%s (%s) [%s]", slug, versionName, state)
+		options = append(options, huh.NewOption(label, slug))
+	}
+
+	selected := []string{}
+	err := huh.NewMultiSelect[string]().
+		Title("Toggle Version Locks").
+		Description("Select mods to toggle lock state. Entries show mod slug, version number, and current lock state.").
+		Options(options...).
+		Value(&selected).
+		Height(pickerHeight(len(options))).
+		Run()
+	if err != nil {
+		out.Warn("Edit cancelled.")
+		return
+	}
+
+	if len(selected) == 0 {
+		out.Warn("No mods selected.")
+		return
+	}
+
+	lockedNow := 0
+	unlockedNow := 0
+	for _, slug := range selected {
+		entry := lf.Mods[slug]
+		if entry.VersionLock {
+			unlockedNow++
+		} else {
+			lockedNow++
+		}
+	}
+
+	totalLocked := 0
+	for _, entry := range lf.Mods {
+		if entry.VersionLock {
+			totalLocked++
+		}
+	}
+	out.Blank()
+	out.Info(fmt.Sprintf("Pending lock changes: +%d lock(s), -%d unlock(s).", lockedNow, unlockedNow))
+
+	if !confirmEditApply(out) {
+		return
+	}
+
+	for _, slug := range selected {
+		entry := lf.Mods[slug]
+		entry.VersionLock = !entry.VersionLock
+		if entry.VersionName == "" {
+			entry.VersionName = entry.VersionID
+		}
+		lf.Mods[slug] = entry
+		if entry.VersionLock {
+			totalLocked++
+		} else if totalLocked > 0 {
+			totalLocked--
+		}
+	}
+
+	if err := lf.Save(); err != nil {
+		out.Error(fmt.Sprintf("Failed to save lockfile: %v", err))
+		os.Exit(1)
+	}
+
+	out.Blank()
+	out.Summary("Lock toggle", metric("selected", len(selected)), metric("locked", lockedNow), metric("unlocked", unlockedNow), metric("total_locked", totalLocked))
+	out.Success("Updated version lock settings in vinth.lock.json.")
+}
+
+func confirmEditApply(out cmdOutput) bool {
+	confirmApply := false
+	if err := huh.NewConfirm().
+		Title("Apply these changes to vinth.lock.json?").
+		Affirmative("Apply").
+		Negative("Cancel").
+		Value(&confirmApply).
+		Run(); err != nil {
+		out.Warn("Edit cancelled.")
+		return false
+	}
+
+	if !confirmApply {
+		out.Warn("No changes were applied.")
+		return false
+	}
+
+	return true
 }
 
 func init() {

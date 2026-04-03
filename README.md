@@ -307,15 +307,74 @@ Anyone else can then run:
 
 to materialize the same tracked mods.
 
+## Local Development
+
+Use this section if you want to contribute or test changes locally.
+
+### Prerequisites
+
+- Go toolchain version compatible with `go.mod`
+- Git
+
+### Clone and enter the repo
+
+```bash
+git clone https://github.com/velolib/vinth.git
+cd vinth
+```
+
+### Run without installing
+
+```bash
+go run . help
+go run . list
+```
+
+PowerShell:
+
+```powershell
+go run . help
+go run . list
+```
+
+### Build a local binary
+
+macOS/Linux:
+
+```bash
+go build -o vinth .
+./vinth help
+```
+
+Windows PowerShell:
+
+```powershell
+go build -o vinth.exe .
+.\vinth.exe help
+```
+
+### Run tests
+
+Run all tests:
+
+```bash
+go test ./...
+```
+
+Run integration tests only:
+
+```bash
+go test ./tests/integration/...
+```
+
 ## Future Ideas
 
 Potential improvements and features under consideration (no particular order):
 
 - Smart dependency resolution and conflict detection
-- Version pinning and constraint selection
 - Sync mod configuration files
 - Support for GitHub-hosted mods
-- Custom download source support
+- Support for Curseforge-hosted mods
 - Built-in mod search and discovery
 - Extended lockfile metadata and annotations
 - Automated publishing to package managers (WinGet, Chocolatey, etc.)

@@ -11,6 +11,10 @@
 
 ## Intro
 
+<p align="center">
+  <img width="480" height="510" src="https://github.com/velolib/vinth/blob/main/assets/demo.webp?raw=true">
+</p>
+
 vinth is a Minecraft mod manager written in Go that uses a lockfile.
 
 It tracks mods from Modrinth in `vinth.lock.json` so your mods folder can be recreated consistently across machines.
